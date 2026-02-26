@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SampSave - Audio Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
+            --accent: #2ecc71;
+            --text-main: #ffffff;
+            --text-dim: #b3b3b3;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* NAVEGACIÓN SUPERIOR */
+        nav {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        nav i {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-dim);
+            transition: 0.3s;
+        }
+
+        nav i:hover { color: white; }
+
+        /* CONTENEDORES DE SECCIÓN */
+        section {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px 0;
+            display: none; /* Oculto por defecto */
+        }
+
+        .active { display: block; }
+
+        /* ESTILO HOME */
+        .hero-box {
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .github-link {
+            background: #24292e;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            cursor: pointer;
+            border: 1px solid #444;
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        button {
+            padding: 12px;
+            border-radius: 5px;
+            border: none;
+            background: #333;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* LIBRERÍA */
+        .empty-state {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-dim);
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 8px;
+        }
+
+        /* SUBIR ARCHIVO */
+        .upload-area {
+            border: 2px dashed #444;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        #btn-guardar {
+            width: 100%;
+            background: #444;
+            color: #888;
+            font-weight: bold;
+            cursor: not-allowed;
+        }
+
+        #btn-guardar.ready {
+            background: var(--accent);
+            color: white;
+            cursor: pointer;
+        }
+
+        /* DETALLES DEL PROYECTO */
+        .back-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .audio-player {
+            background: #282828;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 10px;
+            border: 1px solid #333;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="top-nav">
+        <i class="fas fa-home" onclick="navTo('home')"></i>
+        <i class="fas fa-plus" onclick="navTo('add-audio')"></i>
+        <i class="fas fa-book" onclick="navTo('library')"></i>
+    </nav>
+
+    <section id="home" class="active">
+        <div class="hero-box">
+            <h1>SampSave</h1>
+            <p>SampSave es una biblioteca de archivos de audio, perfecta para almacenar tus maquetas. Te permite comparar versiones anteriores de tus pistas, crear borradores para tu EP y una sección de guarda notas a BPM en sucesión...</p>
+            
+            <div class="github-link" onclick="window.open('https://github.com/guille-gga/SampSave', '_blank')">
+                <i class="fab fa-github"></i> Ver repositorio en GitHub
+            </div>
+
+            <div class="btn-grid">
+                <button>¿CÓMO USARLO?</button>
+                <button>Ayuda</button>
+                <button>Contacto</button>
+                <button>Ver README</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="library">
+        <h2>LIBRERÍA</h2>
+        <div id="project-list">
+            <div class="empty-state">
+                <i class="fas fa-plus" style="font-size: 40px; margin-bottom: 10px;"></i>
+                <p>Todavía no has añadido nada a tu librería</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="add-audio">
+        <div class="back-nav">
+            <i class="fas fa-arrow-left" onclick="navTo('home')"></i>
+            <h2>Subir archivo nuevo</h2>
+        </div>
+
+        <div class="upload-area" onclick="document.getElementById('file-input').click()">
+            <i class="fas fa-file-audio" style="font-size: 40px;"></i>
+            <p id="file-status">Poder subir un nuevo audio WAV o MP3</p>
+            <input type="file" id="file-input" hidden accept=".mp3,.wav" onchange="checkFile()">
+        </div>
+
+        <div id="meta-fields" style="display: none;">
+            <div class="input-group">
+                <input type="text" id="proj-name" placeholder="Nombre del proyecto">
+            </div>
+            <div class="input-group">
+                <input type="text" id="proj-version" placeholder="Versión (Ej: V.1)">
+            </div>
+        </div>
+
+        <button id="btn-guardar" onclick="saveProject()">Guardar</button>
+    </section>
+
+    <section id="project-details">
+        <div class="back-nav">
+            <i class="fas fa-arrow-left" onclick="navTo('library')"></i>
+            <h2 id="detail-title">Nombre Proyecto</h2>
+        </div>
+
+        <h3>Última versión:</h3>
+        <div class="audio-player">
+            <span id="detail-version">V.1</span> | <i class="fas fa-play"></i> Reproducir
+        </div>
+
+        <button style="margin: 15px 0;" onclick="navTo('add-audio')">Subir nueva versión</button>
+
+        <h3>Notas / Letras</h3>
+        <textarea placeholder="Escribe aquí tus notas a compás o letras..."></textarea>
+    </section>
+
+    <script>
+        let db = []; // "Base de datos" temporal
+
+        function navTo(sectionId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            // Mostrar la seleccionada
+            document.getElementById(sectionId).classList.add('active');
+
+            // Lógica instrucciones rojo: Ocultar nav superior en "añadir" y "detalles"
+            const topNav = document.getElementById('top-nav');
+            if(sectionId === 'add-audio' || sectionId === 'project-details') {
+                topNav.style.visibility = 'hidden';
+            } else {
+                topNav.style.visibility = 'visible';
+            }
+
+            if(sectionId === 'library') renderLibrary();
+        }
+
+        function checkFile() {
+            const fileInput = document.getElementById('file-input');
+            const btn = document.getElementById('btn-guardar');
+            if(fileInput.files.length > 0) {
+                document.getElementById('file-status').innerText = "Archivo: " + fileInput.files[0].name;
+                document.getElementById('meta-fields').style.display = 'block';
+                btn.classList.add('ready');
+                btn.disabled = false;
+            }
+        }
+
+        function saveProject() {
+            const name = document.getElementById('proj-name').value;
+            const version = document.getElementById('proj-version').value;
+            
+            if(name && version) {
+                db.push({ name, version });
+                // Limpiar campos
+                document.getElementById('proj-name').value = '';
+                document.getElementById('proj-version').value = '';
+                document.getElementById('file-input').value = '';
+                navTo('library');
+            } else {
+                alert("Por favor rellena el nombre y versión");
+            }
+        }
+
+        function renderLibrary() {
+            const list = document.getElementById('project-list');
+            if(db.length === 0) return;
+
+            list.innerHTML = db.map((proj, index) => `
+                <div class="project-card">
+                    <div>
+                        <strong>${proj.name}</strong><br>
+                        <small>${proj.version}</small>
+                    </div>
+                    <button onclick="openProject(${index})">Abrir</button>
+                </div>
+            `).join('');
+        }
+
+        function openProject(index) {
+            const proj = db[index];
+            document.getElementById('detail-title').innerText = proj.name;
+            document.getElementById('detail-version').innerText = proj.version;
+            navTo('project-details');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+body {
+    background-color: #1a1a1a;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#main-nav {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #333;
+}
+
+.nav-icons i {
+    font-size: 1.5rem;
+    margin: 0 20px;
+    cursor: pointer;
+    color: #888;
+}
+
+.nav-icons i:hover { color: white; }
+
+section { width: 100%; max-width: 600px; padding-top: 20px; }
+.hidden { display: none; }
+
+.hero { text-align: center; }
+.github-box {
+    background: #333;
+    padding: 20px;
+    margin: 20px 0;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.upload-box {
+    border: 2px dashed #555;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#save-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #444;
+    border: none;
+    color: #888;
+    cursor: not-allowed;
+}
+
+#save-btn.active {
+    background-color: #2ecc71;
+    color: white;
+    cursor: pointer;
+}
+
+.project-item {
+    background: #222;
+    padding: 15px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-open {
+    background: black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
