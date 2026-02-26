@@ -21,7 +21,7 @@ Abre Visual Studio Code.
 
 Ve al menú de arriba en File > Archivo > Abrir Carpeta.
 
-Selecciona la carpeta que acabas de descomprimir.
+Selecciona la carpeta SampSave donde está el Index, Css, y JavaScript. 
 
 En la izquierda verás un archivo llamado index.html. Haz clic en él para que se abra.
 
