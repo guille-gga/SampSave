@@ -4,28 +4,48 @@ SampSave es una biblioteca de archivos de audio, perfecta para almacenar tus maq
 La libreria cuenta con un apartado parecido a los comentarios de SoundCloud, pero tu estableces el minuto y el comentario que desees añadir.
 Lo bueno que es privado y de uso personal, solo tu tienes tu biblioteca.
 
-# Partes
+# ¿COMO USAR?
 
-- Libreria
-- Upload
-- Feed Intro
+1. Descargar el Proyecto
+Entra en el enlace de GitHub: https://github.com/guille-gga/SampSave.
 
-- **Upload:**
+Busca el botón verde que pone "Code".
 
-Guardar track
-Crear lista EP
-- Notas/Lyrics
+Haz clic en Download ZIP.
 
-- **Libreria** 
+Descomprime esa carpeta en tu ordenador.
 
-Reproducir pistas
-Add comentarios personles
-Comparar versiones anteriores
+2. Abrir en Visual Studio Code
 
-- **Feed Intro**
-Presentación 
-Instalacion/Uso
-Enlace a Git
+Abre Visual Studio Code.
+
+Ve al menú de arriba en File > Archivo > Abrir Carpeta.
+
+Selecciona la carpeta que acabas de descomprimir.
+
+En la izquierda verás un archivo llamado index.html. Haz clic en él para que se abra.
+
+3. Correr el programa.
+
+Para que el programa funcione correctamente con los archivos de audio, necesitamos que esté en un servidor local:
+
+Usa la extensión Live Server
+
+Mira eabajo enla derecha de la pantalla.
+
+Haz clic en el botón que pone Go Live.
+
+Se abrirá tu navegador automáticamente con SampSave listo.
+
+**Notas importantes**
+
+*Aqui encontrarás todo lo que queda por mejorar*
+
+¿Dónde se guardan mis temas?:
+- Al ser una versión de prueba en Localhost, los audios se mantienen mientras no limpies la caché del navegador.
+
+
+
 
 
 
