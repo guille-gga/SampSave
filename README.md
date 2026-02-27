@@ -16,27 +16,27 @@ Lo bueno que es privado y de uso personal, solo tu tienes tu biblioteca.
 
 - Descomprime esa carpeta en tu ordenador.
 
-2. Abrir en Visual Studio Code
+**2. Abrir en Visual Studio Code**
 
-Abre Visual Studio Code.
+- Abre Visual Studio Code.
 
-Ve al menú de arriba en File > Archivo > Abrir Carpeta.
+- Ve al menú de arriba en File > Archivo > Abrir Carpeta.
 
-Selecciona la carpeta SampSave donde está el Index, Css, y JavaScript. 
+- Selecciona la carpeta SampSave donde está el Index, Css, y JavaScript. 
 
-En la izquierda verás un archivo llamado index.html. Haz clic en él para que se abra.
+- En la izquierda verás un archivo llamado index.html. Haz clic en él para que se abra.
 
-3. Correr el programa.
+**3. Correr el programa.**
 
-Para que el programa funcione correctamente con los archivos de audio, necesitamos que esté en un servidor local:
+- Para que el programa funcione correctamente con los archivos de audio, necesitamos que esté en un servidor local:
 
-Usa la extensión Live Server
+- Usa la extensión Live Server
 
-Mira eabajo enla derecha de la pantalla.
+- Mira eabajo enla derecha de la pantalla.
 
-Haz clic en el botón que pone Go Live.
+- Haz clic en el botón que pone Go Live.
 
-Se abrirá tu navegador automáticamente con SampSave listo.
+- Se abrirá tu navegador automáticamente con SampSave listo.
 
 **Notas importantes**
 
