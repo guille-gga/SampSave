@@ -6,14 +6,15 @@ Lo bueno que es privado y de uso personal, solo tu tienes tu biblioteca.
 
 # ¿COMO USAR?
 
-1. Descargar el Proyecto
-Entra en el enlace de GitHub: https://github.com/guille-gga/SampSave.
+**1. Descargar el Proyecto**
 
-Busca el botón verde que pone "Code".
+- Entra en el enlace de GitHub: https://github.com/guille-gga/SampSave.
 
-Haz clic en Download ZIP.
+- Busca el botón verde que pone "Code".
 
-Descomprime esa carpeta en tu ordenador.
+- Haz clic en Download ZIP.
+
+- Descomprime esa carpeta en tu ordenador.
 
 2. Abrir en Visual Studio Code
 
