@@ -40,7 +40,7 @@ Lo bueno que es privado y de uso personal, solo tu tienes tu biblioteca.
 
 ## AYUDA
 
-*Aqui encontrarás todo lo que queda por mejorar*
+*Aqui encontrarás todo lo que queda por mejorar y los errores corregidos*
 
 ### ¿Dónde se guardan mis temas?:
 - Al ser una versión de prueba en Localhost, los audios se mantienen mientras no limpies la caché del navegador. **(CORREGIDO)**
