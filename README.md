@@ -47,6 +47,11 @@ Lo bueno que es privado y de uso personal, solo tu tienes tu biblioteca.
 
 Corrección: Los audios se guardan correctamente aunque actualices la página.
 
+### ¿Como salgo de *Subir Audio*?:
+- Como el menú principal desaparece aqui dentro, la flecha para salir está abajo y por eso no es muy visible. **(CORREGIDO)**
+
+Corrección: La flecha está arriba, al lado del titulo.
+
 ### ¿Como vuelvo a escuchar la version reciente?
 - Los temas se reproducen en el mismo reproductor, para que no puedan sonar los dos a la vez. Por eso pasa esto
 
