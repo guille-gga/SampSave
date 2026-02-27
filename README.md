@@ -28,7 +28,7 @@ Lo bueno que es privado y de uso personal, solo tu tienes tu biblioteca.
 
 **3. Correr el programa.**
 
-- Para que el programa funcione correctamente con los archivos de audio, necesitamos que esté en un servidor local:
+*Para que funcione el programa necesitamos que esté en un servidor local*
 
 - Usa la extensión Live Server
 
@@ -38,12 +38,17 @@ Lo bueno que es privado y de uso personal, solo tu tienes tu biblioteca.
 
 - Se abrirá tu navegador automáticamente con SampSave listo.
 
-**Notas importantes**
+## AYUDA
 
 *Aqui encontrarás todo lo que queda por mejorar*
 
-¿Dónde se guardan mis temas?:
-- Al ser una versión de prueba en Localhost, los audios se mantienen mientras no limpies la caché del navegador.
+### ¿Dónde se guardan mis temas?:
+- Al ser una versión de prueba en Localhost, los audios se mantienen mientras no limpies la caché del navegador. **(CORREGIDO)**
+
+Corrección: Los audios se guardan correctamente aunque actualices la página.
+
+### ¿Como vuelvo a escuchar la version reciente?
+- Los temas se reproducen en el mismo reproductor, para que no puedan sonar los dos a la vez. Por eso pasa esto
 
 
 
