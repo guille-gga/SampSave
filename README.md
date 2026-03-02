@@ -47,7 +47,7 @@ Lo bueno que es privado y de uso personal, solo tu tienes tu biblioteca.
 
 Corrección: Los audios se guardan correctamente aunque actualices la página.
 
-### ¿Como salgo de *Subir Audio*?:
+### ¿Como salgo de *Nuevo Proyecto*?:
 - Como el menú principal desaparece aqui dentro, la flecha para salir está abajo y por eso no es muy visible. **(CORREGIDO)**
 
 Corrección: La flecha está arriba, al lado del titulo.
