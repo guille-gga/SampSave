@@ -3,241 +3,388 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SampSave - Almacenamiento Permanente</title>
+    <title>SampSave - Studio Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg-dark: #121212; --card-bg: #1e1e1e; --accent: #2ecc71;
-            --text-main: #ffffff; --text-dim: #b3b3b3; --danger: #e74c3c; --blue: #3498db;
+            --bg-dark: #090909; --card-bg: #181818; --accent: #1db954;
+            --text-main: #ffffff; --text-dim: #a7a7a7; --danger: #e91e63; --blue: #1d8cf8;
         }
 
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-dark); color: var(--text-main); margin: 0; display: flex; flex-direction: column; align-items: center; }
-        nav { width: 100%; max-width: 600px; display: flex; justify-content: space-around; padding: 20px 0; border-bottom: 1px solid #333; }
-        nav i { font-size: 24px; cursor: pointer; color: var(--text-dim); transition: 0.3s; }
-        nav i:hover { color: white; }
-
-        section { width: 90%; max-width: 600px; padding: 20px 0; display: none; }
-        .active { display: block; }
-
-        /* BOTÓN SHINY */
-        .btn-shiny {
-            position: relative; display: inline-block; padding: 15px 30px; margin-top: 25px;
-            background: #222; color: white; text-decoration: none; font-weight: bold;
-            border: 2px solid #444; overflow: hidden; transition: 0.5s; cursor: pointer; border-radius: 4px;
-        }
-        .btn-shiny:hover { background: var(--blue); box-shadow: 0 0 20px var(--blue); }
-        .btn-shiny::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: 0.5s; }
-        .btn-shiny:hover::before { left: 100%; }
-
-        /* UI ELEMENTS */
-        .project-card { background: var(--card-bg); padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px; border-left: 4px solid var(--accent); }
-        .upload-area { border: 2px dashed #444; padding: 40px; text-align: center; border-radius: 10px; margin-bottom: 20px; cursor: pointer; }
-        input[type="text"], textarea { width: 100%; padding: 12px; background: #222; border: 1px solid #444; color: white; box-sizing: border-box; border-radius: 5px; margin-bottom: 10px; }
-        button { padding: 12px; border-radius: 5px; border: none; background: #333; color: white; cursor: pointer; font-weight: bold; }
-        #btn-guardar:disabled { opacity: 0.5; }
-
-        .main-player-unit { background: #282828; padding: 20px; border-radius: 10px; margin: 10px 0; border: 2px solid transparent; }
-        .playing-old { border-color: var(--blue); background: #1a2633; }
-        audio { width: 100%; filter: invert(100%) hue-rotate(180deg); margin-top: 10px; }
+        body { font-family: 'Inter', 'Segoe UI', sans-serif; background-color: var(--bg-dark); color: var(--text-main); margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding-bottom: 50px;}
         
-        .version-item { background: #1a1a1a; padding: 12px; margin-top: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; }
-        .tag { padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; }
+        /* --- HEADER & NAV --- */
+        nav { width: 100%; max-width: 600px; display: flex; justify-content: space-around; padding: 25px 0; border-bottom: 1px solid #282828; position: sticky; top: 0; background: var(--bg-dark); z-index: 90; }
+        nav i { font-size: 22px; cursor: pointer; color: var(--text-dim); transition: 0.3s; }
+        nav i:hover { color: var(--accent); transform: scale(1.1); }
+
+        section { width: 90%; max-width: 500px; padding: 20px 0; display: none; animation: fadeIn 0.4s ease; }
+        .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- PERFIL DROPDOWN --- */
+        #profile-menu-btn {
+            position: absolute; right: 20px; top: 20px; width: 42px; height: 42px; 
+            border-radius: 50%; background: #282828; border: 2px solid transparent;
+            cursor: pointer; overflow: hidden; display: flex; align-items: center; justify-content: center; z-index: 100; transition: 0.3s;
+        }
+        #profile-menu-btn:hover { border-color: var(--accent); }
+        #profile-menu-btn img { width: 100%; height: 100%; object-fit: cover; }
+        
+        #profile-dropdown {
+            position: absolute; right: 20px; top: 70px; background: #282828; border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 101; display: none; min-width: 180px; padding: 5px;
+        }
+        #profile-dropdown button { 
+            width: 100%; padding: 12px; text-align: left; background: none; border: none; 
+            color: white; cursor: pointer; font-size: 14px; border-radius: 2px;
+        }
+        #profile-dropdown button:hover { background: #3e3e3e; }
+
+        /* --- CARDS & FORMS --- */
+        .project-card { background: var(--card-bg); padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px; transition: 0.3s; }
+        .project-card:hover { background: #282828; }
+        
+        .upload-area { border: 2px dashed #333; padding: 50px; text-align: center; border-radius: 12px; margin-bottom: 25px; cursor: pointer; color: var(--text-dim); }
+        .upload-area:hover { border-color: var(--accent); color: white; background: #121212; }
+        
+        input, textarea { width: 100%; padding: 14px; background: #333; border: 1px solid transparent; color: white; border-radius: 6px; margin-bottom: 15px; box-sizing: border-box; font-size: 15px;}
+        input:focus { border-color: var(--accent); outline: none; }
+        
+        button { padding: 14px 24px; border-radius: 50px; border: none; background: #f6f6f6; color: black; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; }
+        button:hover { transform: scale(1.04); }
+        .btn-main { background: var(--accent); color: black; width: 100%; margin-top: 10px; }
+
+        /* --- PERFIL DESIGN --- */
+        .profile-header { text-align: center; position: relative; padding: 20px 0; }
+        .profile-avatar-xl { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.5); margin-bottom: 20px; border: 4px solid var(--accent); }
+        .profile-badge { background: var(--accent); color: black; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
+        
+        .edit-avatar-container { position: relative; width: 120px; height: 120px; margin: 0 auto 20px; cursor: pointer; }
+        .edit-avatar-container img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; opacity: 0.6; }
+        .edit-avatar-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 20px; pointer-events: none; }
+
+        /* --- PLAYER --- */
+        .main-player-unit { background: linear-gradient(180deg, #282828 0%, #181818 100%); padding: 25px; border-radius: 15px; margin: 15px 0; }
+        audio { width: 100%; filter: invert(1); margin-top: 15px; height: 35px; }
+        
+        .tag { padding: 5px 10px; border-radius: 4px; font-size: 10px; font-weight: 800; letter-spacing: 1px; }
         .tag-current { background: var(--accent); color: black; }
-        .tag-old { background: var(--blue); color: white; }
+        .tag-old { background: #535353; color: white; }
     </style>
 </head>
 <body>
 
+    <div id="profile-menu-btn" onclick="toggleDropdown()">
+        <img id="header-avatar" src="" style="display:none;">
+        <i id="header-icon" class="fas fa-user"></i>
+    </div>
+
+    <div id="profile-dropdown">
+        <button onclick="navTo('view-profile')"><i class="fas fa-user-circle"></i> Mi Perfil</button>
+        <button onclick="navTo('edit-profile')"><i class="fas fa-cog"></i> Configuración</button>
+        <hr style="border: 0; border-top: 1px solid #444;">
+        <button onclick="location.reload()"><i class="fas fa-sync"></i> Refrescar Studio</button>
+    </div>
+
     <nav id="top-nav">
         <i class="fas fa-home" onclick="navTo('home')"></i>
-        <i class="fas fa-plus" onclick="initNewProject()"></i>
-        <i class="fas fa-book" onclick="navTo('library')"></i>
+        <i class="fas fa-plus" onclick="openNewProject()"></i>
+        <i class="fas fa-compact-disc" onclick="navTo('library')"></i>
     </nav>
 
     <section id="home" class="active">
-        <div style="text-align: center;">
-            <h1>SampSave 💎</h1>
-            <p style="color: var(--text-dim);">Tus audios ahora se guardan de forma permanente en la base de datos de tu navegador.</p>
-            <a href="https://github.com/guille-gga/SampSave" target="_blank" class="btn-shiny">¿COMO USAR?</a>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 30px;">
-                <button onclick="navTo('library')">LIBRERÍA</button>
-                <button onclick="initNewProject()" style="background: var(--accent);">NUEVO TRACK</button>
+        <div style="text-align: center; margin-top: 60px;">
+            <h1 style="font-size: 48px; margin-bottom: 10px;">SampSave</h1>
+            <p style="color:var(--text-dim); font-size: 18px;">Tu flujo creativo, organizado.</p>
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 50px;">
+                <button onclick="openNewProject()" style="background:var(--accent); color:black; font-size: 16px; padding: 18px;">NUEVO PROYECTO</button>
+                <button onclick="navTo('library')" style="background:transparent; color:white; border: 1px solid #555;">EXPLORAR LIBRERÍA</button>
             </div>
         </div>
     </section>
 
     <section id="library">
-        <h2>LIBRERÍA</h2>
+        <h2 style="font-size: 28px; margin-bottom: 25px;">Tu música</h2>
         <div id="project-list"></div>
     </section>
 
     <section id="add-audio">
-        <h2 id="upload-header">Subir</h2>
+        <h2 id="upload-title">Subir audio</h2>
         <div class="upload-area" onclick="document.getElementById('file-input').click()">
-            <i class="fas fa-save" style="font-size: 40px; color: var(--accent);"></i>
-            <p id="file-status">Elegir archivo para guardar en BD</p>
-            <input type="file" id="file-input" hidden accept=".mp3,.wav" onchange="fileSelected()">
+            <i class="fas fa-arrow-up" style="font-size: 32px; margin-bottom: 15px;"></i>
+            <p id="file-status">Haz clic para buscar archivo...</p>
+            <input type="file" id="file-input" hidden accept="audio/*" onchange="handleFileSelect()">
         </div>
-        <input type="text" id="proj-name" placeholder="Nombre de la canción">
-        <input type="text" id="proj-version" placeholder="Nombre versión (Ej: Mezcla Final)">
-        <button id="btn-guardar" disabled onclick="saveProject()" style="width: 100%;">GUARDAR EN DISCO LOCAL</button>
+        <input type="text" id="name-input" placeholder="Título de la canción">
+        <input type="text" id="ver-input" placeholder="Nombre de la versión (ej. Master 2024)">
+        <button id="save-btn" class="btn-main" disabled onclick="processSave()">GUARDAR EN STUDIO</button>
     </section>
 
     <section id="project-details">
-        <h2 id="detail-title">Cargando...</h2>
-        <div id="player-unit" class="main-player-unit">
-            <span id="player-mode-tag" class="tag tag-current">ACTUAL</span>
-            <strong id="player-version-name" style="margin-left: 10px;">-</strong>
-            <audio id="audio-element" controls></audio>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h2 id="det-title" style="margin:0;">Track</h2>
+            <span class="profile-badge">Estudio</span>
         </div>
-        <div style="display: flex; gap: 10px; margin-top: 15px;">
-            <button onclick="prepareUpdate()" style="flex: 2; background: var(--blue);"><i class="fas fa-sync"></i> NUEVA VERSIÓN</button>
-            <button onclick="deleteProject()" style="background: var(--danger);"><i class="fas fa-trash"></i></button>
+        <div id="player-card" class="main-player-unit">
+            <span id="player-tag" class="tag tag-current">ACTUAL</span>
+            <strong id="player-ver-name" style="margin-left:10px; color:var(--accent)">---</strong>
+            <audio id="main-audio" controls></audio>
         </div>
-        <textarea id="proj-notes" placeholder="Notas del track..."></textarea>
-        <div id="history-list"></div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:20px;">
+            <button onclick="openUpdate()" style="background:#333; color:white"><i class="fas fa-plus"></i> Versión</button>
+            <button onclick="deleteCurrentProject()" style="background:transparent; color:var(--danger); border:1px solid var(--danger)"><i class="fas fa-trash"></i></button>
+        </div>
+        <textarea id="notes-area" placeholder="Notas de producción, BPM, letras..." style="height:120px;" oninput="saveNotes()"></textarea>
+        <div id="history-section">
+            <h4 style="color:var(--text-dim); text-transform:uppercase; font-size:12px; letter-spacing:1px;">Historial</h4>
+            <div id="history-list"></div>
+        </div>
+    </section>
+
+    <section id="view-profile">
+        <div class="profile-header">
+            <img id="v-avatar" class="profile-avatar-xl" src="" style="display:none;">
+            <div id="v-icon" style="font-size:100px; color:#333; margin-bottom:20px;"><i class="fas fa-user-circle"></i></div>
+            <h1 id="v-name" style="margin:0; font-size:32px;">Nombre</h1>
+            <p id="v-country" style="color:var(--accent); font-weight:bold; margin-top:5px;"></p>
+            <div style="max-width:300px; margin: 20px auto; color:var(--text-dim); line-height:1.6;" id="v-bio"></div>
+            <button onclick="navTo('edit-profile')" style="background:#333; color:white">EDITAR PERFIL</button>
+        </div>
+    </section>
+
+    <section id="edit-profile">
+        <h2 style="margin-bottom:30px;">Editar Perfil</h2>
+        <div class="edit-avatar-container" onclick="document.getElementById('p-img-input').click()">
+            <img id="e-avatar" src="">
+            <div class="edit-avatar-overlay"><i class="fas fa-camera"></i></div>
+        </div>
+        <input type="file" id="p-img-input" hidden accept="image/*" onchange="previewImg(this)">
+        
+        <label style="font-size:12px; color:var(--text-dim);">NOMBRE ARTÍSTICO</label>
+        <input type="text" id="e-name">
+        
+        <label style="font-size:12px; color:var(--text-dim);">BIOGRAFÍA</label>
+        <textarea id="e-bio" style="height:100px;"></textarea>
+        
+        <label style="font-size:12px; color:var(--text-dim);">UBICACIÓN / PAÍS</label>
+        <input type="text" id="e-country">
+        
+        <button class="btn-main" onclick="saveUserProfile()">GUARDAR CAMBIOS</button>
     </section>
 
     <script>
-        let dbIDB;
+        let db;
         let projects = [];
+        let user = { name: 'Músico', bio: 'Bienvenido a mi estudio.', country: 'España', img: null };
         let currentIdx = null;
+        let mode = 'new';
 
-        // 1. INICIALIZAR INDEXEDDB (Base de datos real)
-        const request = indexedDB.open("SampSaveStorage", 1);
+        // --- MOTOR DE PERSISTENCIA ---
+        const request = indexedDB.open("SampSave_Studio_V3", 1);
         request.onupgradeneeded = e => {
-            dbIDB = e.target.result;
-            dbIDB.createObjectStore("files", { keyPath: "id" });
+            e.target.result.createObjectStore("files", { keyPath: "id" });
         };
-        request.onsuccess = e => {
-            dbIDB = e.target.result;
-            loadProjects();
+        request.onsuccess = e => { 
+            db = e.target.result; 
+            loadAllData();
         };
 
+        function loadAllData() {
+            // Cargar proyectos e historial
+            projects = JSON.parse(localStorage.getItem('ss_projects_v3')) || [];
+            // Cargar perfil
+            const savedUser = localStorage.getItem('ss_user_v3');
+            if(savedUser) user = JSON.parse(savedUser);
+            
+            renderLibrary();
+            renderUser();
+            console.log("Datos cargados correctamente.");
+        }
+
+        // --- NAVEGACIÓN ---
         function navTo(id) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            if(id === 'library') renderLibrary();
+            document.getElementById('profile-dropdown').style.display = 'none';
+            window.scrollTo(0,0);
         }
 
-        function fileSelected() {
+        function toggleDropdown() {
+            let d = document.getElementById('profile-dropdown');
+            d.style.display = d.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // --- GESTIÓN DE PERFIL ---
+        function renderUser() {
+            // Actualizar botones y cabeceras
+            const avs = [document.getElementById('header-avatar'), document.getElementById('v-avatar'), document.getElementById('e-avatar')];
+            avs.forEach(a => { 
+                if(user.img) { a.src = user.img; a.style.display = 'block'; } 
+            });
+            
+            document.getElementById('header-icon').style.display = user.img ? 'none' : 'block';
+            document.getElementById('v-icon').style.display = user.img ? 'none' : 'block';
+            
+            document.getElementById('v-name').innerText = user.name;
+            document.getElementById('v-bio').innerText = user.bio;
+            document.getElementById('v-country').innerText = "📍 " + user.country;
+
+            document.getElementById('e-name').value = user.name;
+            document.getElementById('e-bio').value = user.bio;
+            document.getElementById('e-country').value = user.country;
+        }
+
+        function previewImg(input) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = e => { 
+                    user.img = e.target.result; 
+                    document.getElementById('e-avatar').src = user.img;
+                    document.getElementById('e-avatar').style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function saveUserProfile() {
+            user.name = document.getElementById('e-name').value;
+            user.bio = document.getElementById('e-bio').value;
+            user.country = document.getElementById('e-country').value;
+            
+            localStorage.setItem('ss_user_v3', JSON.stringify(user));
+            renderUser();
+            navTo('view-profile');
+            alert("¡Perfil actualizado!");
+        }
+
+        // --- GESTIÓN DE PROYECTOS ---
+        function openNewProject() {
+            mode = 'new';
+            document.getElementById('upload-title').innerText = "Nuevo Proyecto";
+            document.getElementById('name-input').style.display = 'block';
+            document.getElementById('name-input').value = '';
+            document.getElementById('ver-input').value = '';
+            navTo('add-audio');
+        }
+
+        function openUpdate() {
+            mode = 'update';
+            document.getElementById('upload-title').innerText = "Actualizar Versión";
+            document.getElementById('name-input').style.display = 'none';
+            document.getElementById('ver-input').value = '';
+            navTo('add-audio');
+        }
+
+        function handleFileSelect() {
             const file = document.getElementById('file-input').files[0];
             if(file) {
-                document.getElementById('file-status').innerText = "Seleccionado: " + file.name;
-                document.getElementById('btn-guardar').disabled = false;
+                document.getElementById('file-status').innerText = "🎵 " + file.name;
+                document.getElementById('save-btn').disabled = false;
             }
         }
 
-        // 2. GUARDAR EL AUDIO COMO BINARIO
-        async function saveProject() {
+        async function processSave() {
             const file = document.getElementById('file-input').files[0];
-            const vName = document.getElementById('proj-version').value;
-            if(!file || !vName) return;
+            const vName = document.getElementById('ver-input').value || "Final Mix";
+            const fileId = "aud_" + Date.now();
 
-            const fileID = Date.now().toString();
-            const transaction = dbIDB.transaction(["files"], "readwrite");
-            transaction.objectStore("files").add({ id: fileID, data: file });
+            // Guardar en base de datos pesada (IDB)
+            const tx = db.transaction("files", "readwrite");
+            await tx.objectStore("files").put({ id: fileId, blob: file });
 
-            const audioMeta = { vName: vName, fName: file.name, fileID: fileID };
+            const meta = { id: fileId, vName: vName, date: new Date().toLocaleDateString() };
 
-            if(document.getElementById('upload-header').innerText === "Nueva Versión") {
-                projects[currentIdx].history.unshift(projects[currentIdx].current);
-                projects[currentIdx].current = audioMeta;
-            } else {
+            if(mode === 'new') {
                 projects.push({
-                    name: document.getElementById('proj-name').value || "Sin título",
-                    current: audioMeta,
-                    history: [],
-                    notes: ""
+                    name: document.getElementById('name-input').value || "Nueva Pista",
+                    notes: "",
+                    current: meta,
+                    history: []
                 });
+            } else {
+                projects[currentIdx].history.unshift(projects[currentIdx].current);
+                projects[currentIdx].current = meta;
             }
-            saveConfig();
-            navTo('library');
-        }
 
-        function saveConfig() {
-            localStorage.setItem('sampsave_meta', JSON.stringify(projects));
-        }
-
-        function loadProjects() {
-            projects = JSON.parse(localStorage.getItem('sampsave_meta')) || [];
+            localStorage.setItem('ss_projects_v3', JSON.stringify(projects));
             renderLibrary();
+            navTo('library');
         }
 
         function renderLibrary() {
             const container = document.getElementById('project-list');
-            container.innerHTML = projects.map((p, i) => `
-                <div class="project-card">
-                    <div><strong>${p.name}</strong><br><small>${p.current.vName}</small></div>
-                    <button onclick="openProject(${i})">ABRIR</button>
-                </div>
-            `).join('');
+            container.innerHTML = projects.length ? '' : '<p style="color:gray;text-align:center;margin-top:20px;">Librería vacía.</p>';
+            projects.forEach((p, i) => {
+                container.innerHTML += `
+                    <div class="project-card" onclick="viewProject(${i})" style="cursor:pointer">
+                        <div>
+                            <div style="font-weight:700;">${p.name}</div>
+                            <div style="font-size:12px; color:var(--accent)">${p.current.vName}</div>
+                        </div>
+                        <i class="fas fa-chevron-right" style="color:#333"></i>
+                    </div>
+                `;
+            });
         }
 
-        async function openProject(i) {
+        async function viewProject(i) {
             currentIdx = i;
             const p = projects[i];
-            document.getElementById('detail-title').innerText = p.name;
-            document.getElementById('proj-notes').value = p.notes;
-            await playAudio(p.current, true);
+            document.getElementById('det-title').innerText = p.name;
+            document.getElementById('notes-area').value = p.notes;
+            await loadAudio(p.current, true);
             renderHistory();
             navTo('project-details');
         }
 
-        // 3. RECUPERAR EL AUDIO DE LA BD AL HACER CLICK
-        async function playAudio(audioMeta, isCurrent) {
-            const transaction = dbIDB.transaction(["files"], "readonly");
-            const store = transaction.objectStore("files");
-            const request = store.get(audioMeta.fileID);
-
-            request.onsuccess = () => {
-                const fileBlob = request.result.data;
-                const url = URL.createObjectURL(fileBlob);
-                const player = document.getElementById('audio-element');
+        async function loadAudio(meta, isCurrent) {
+            const tx = db.transaction("files", "readonly");
+            const req = tx.objectStore("files").get(meta.id);
+            req.onsuccess = () => {
+                const url = URL.createObjectURL(req.result.blob);
+                const player = document.getElementById('main-audio');
                 player.src = url;
-                document.getElementById('player-version-name').innerText = audioMeta.vName;
-                document.getElementById('player-mode-tag').className = isCurrent ? "tag tag-current" : "tag tag-old";
-                document.getElementById('player-mode-tag').innerText = isCurrent ? "ACTUAL" : "VERSIÓN ANTIGUA";
-                document.getElementById('player-unit').classList.toggle('playing-old', !isCurrent);
+                document.getElementById('player-ver-name').innerText = meta.vName;
+                document.getElementById('player-tag').innerText = isCurrent ? "ACTUAL" : "VERSION ANTERIOR";
+                document.getElementById('player-tag').className = isCurrent ? "tag tag-current" : "tag tag-old";
                 player.play();
             };
         }
 
         function renderHistory() {
-            const container = document.getElementById('history-list');
-            const history = projects[currentIdx].history;
-            container.innerHTML = "<h3>HISTORIAL</h3>" + (history.length ? history.map((h, i) => `
-                <div class="version-item">
-                    <span>${h.vName}</span>
-                    <button onclick='playAudio(${JSON.stringify(h)}, false)'><i class="fas fa-play"></i></button>
-                </div>
-            `).join('') : "<p>Sin versiones</p>");
+            const list = document.getElementById('history-list');
+            list.innerHTML = '';
+            projects[currentIdx].history.forEach(h => {
+                list.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:#121212; padding:12px; margin-top:8px; border-radius:6px; border:1px solid #222;">
+                        <span style="font-size:13px;">${h.vName} <small style="color:var(--text-dim)">- ${h.date}</small></span>
+                        <button onclick='loadAudio(${JSON.stringify(h)}, false)' style="padding:8px 15px; font-size:12px; background:#282828; color:white">OÍR</button>
+                    </div>
+                `;
+            });
         }
 
-        function initNewProject() {
-            document.getElementById('upload-header').innerText = "Nuevo Proyecto";
-            document.getElementById('proj-name').style.display = "block";
-            navTo('add-audio');
+        function saveNotes() {
+            projects[currentIdx].notes = document.getElementById('notes-area').value;
+            localStorage.setItem('ss_projects_v3', JSON.stringify(projects));
         }
 
-        function prepareUpdate() {
-            document.getElementById('upload-header').innerText = "Nueva Versión";
-            document.getElementById('proj-name').style.display = "none";
-            navTo('add-audio');
-        }
-
-        function deleteProject() {
-            if(confirm("¿Borrar proyecto?")) {
+        function deleteCurrentProject() {
+            if(confirm("¿Eliminar este track para siempre?")) {
                 projects.splice(currentIdx, 1);
-                saveConfig();
+                localStorage.setItem('ss_projects_v3', JSON.stringify(projects));
+                renderLibrary();
                 navTo('library');
             }
         }
-
-        document.getElementById('proj-notes').oninput = e => {
-            projects[currentIdx].notes = e.target.value;
-            saveConfig();
-        };
+        
+        // Cerrar dropdown si haces click fuera
+        window.onclick = function(event) {
+            if (!event.target.matches('#profile-menu-btn') && !event.target.closest('#profile-menu-btn')) {
+                document.getElementById('profile-dropdown').style.display = "none";
+            }
+        }
     </script>
 </body>
 </html>
