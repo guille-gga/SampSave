@@ -52,6 +52,9 @@ Corrección: Los audios se guardan correctamente aunque actualices la página.
 
 Corrección: El menú principal se mantiene
 
+### ¿Cómo guardo mi perfil?
+- Un error común es que cuando estas en diferentes ventanas el perfil sale como si no lo hubieras editado.
+
 ### ¿Como vuelvo a escuchar la version reciente?
 - Los temas se reproducen en el mismo reproductor, para que no puedan sonar los dos a la vez. Por eso pasa esto
 
