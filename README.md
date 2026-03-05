@@ -65,7 +65,15 @@ Correción: Se pueden cargar archivos en cualquier formato --> .flac , .mp3, .wa
 ### ¿Como vuelvo a escuchar la version reciente?
 - Los temas se reproducen en el mismo reproductor, para que no puedan sonar los dos a la vez. Por eso pasa esto
 
+## PROXIMAMENTE
 
+*Cosas que quedan por añadir*
+
+- Login/Registro.
+- Acceso directo a tu SoundCloud.
+- Añadir pistas favoritas
+- Crear hasta 3 Lyrics.
+- Añadir información adicional a la pista.
 
 
 
