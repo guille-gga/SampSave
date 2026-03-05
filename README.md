@@ -1,10 +1,9 @@
 # SampSave
 
-SampSave es una biblioteca de archivos de audio, perfecta para almacenar tus maquetas. Te permite comparar versiones anteriores de tus pistas, crear borradores para tu EP y una sección de guarda notas a BPM en sucesion, o a compas 4x4 u 8x8.
-La libreria cuenta con un apartado parecido a los comentarios de SoundCloud, pero tu estableces el minuto y el comentario que desees añadir.
-Lo bueno que es privado y de uso personal, solo tu tienes tu biblioteca.
+SampSave es una biblioteca de archivos de audio, perfecta para almacenar tus maquetas. Te permite comparar versiones anteriores de tus pistas, crear borradores para tu EP y una sección de guarda notas o BPM.
+¿Lo mejor? que es privado y de uso personal, solo tu tienes tu biblioteca.
 
-# ¿COMO USAR?
+# ¿CÓMO EMPEZAR A USAR?
 
 **1. Descargar el Proyecto**
 
@@ -38,6 +37,18 @@ Lo bueno que es privado y de uso personal, solo tu tienes tu biblioteca.
 
 - Se abrirá tu navegador automáticamente con SampSave listo.
 
+## ¿QUÉ OFRECE?
+*Todo lo que se haya añadido se actualizará aquí*
+
+- Subir tus maquetas en un ambiente privado.
+- Actualizar tus maquetas en un mismo lugar.
+- Puedes comparas versiones y escuchar las versiones nuevas y las antiguas.
+- Añadir la versión de tu maqueta para establecer un orden.
+- Añadir letras para tus canciones o información adicional.
+- Editar tu perfil.
+- Tiene una libreria para ver todos tus proyectos.
+
+
 ## AYUDA
 
 *Aqui encontrarás todo lo que queda por mejorar y los errores corregidos*
@@ -70,11 +81,12 @@ Correción: Se pueden cargar archivos en cualquier formato --> .flac , .mp3, .wa
 *Cosas que quedan por añadir*
 
 - Login/Registro.
+- Facilitar acceso.
 - Acceso directo a tu SoundCloud.
 - Añadir pistas favoritas
 - Crear hasta 3 Lyrics.
-- Añadir información adicional a la pista.
-
+- Añadir información adicional a la pista aparte.
+- Mejorar interfaz.
 
 
 
