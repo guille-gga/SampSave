@@ -57,6 +57,11 @@ Corrección: El menú principal se mantiene
 
 Corrección: Puedes editar tu perfil. Puedes usar el programa con tu perfil personalizado.
 
+### ¿Porqué no puedo subir audios .WAV?
+- La caché del navegador es limitada y los audios .wav son alta calidad y suelen ocupar mucho.
+
+Correción: Se pueden cargar archivos en cualquier formato --> .flac , .mp3, .wav...
+
 ### ¿Como vuelvo a escuchar la version reciente?
 - Los temas se reproducen en el mismo reproductor, para que no puedan sonar los dos a la vez. Por eso pasa esto
 
