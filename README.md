@@ -3,6 +3,8 @@
 SampSave es una biblioteca de archivos de audio, perfecta para almacenar tus maquetas. Te permite comparar versiones anteriores de tus pistas, crear borradores para tu EP y una sección de guarda notas o BPM.
 ¿Lo mejor? que es privado y de uso personal, solo tu tienes tu biblioteca.
 
+[IMAGENES DEL PROGRAMA](https://github.com/guille-gga/SampSave/tree/main/IMG_SampSave)
+
 # ¿CÓMO EMPEZAR A USAR?
 
 **1. Descargar el Proyecto**
@@ -36,6 +38,8 @@ SampSave es una biblioteca de archivos de audio, perfecta para almacenar tus maq
 - Haz clic en el botón que pone Go Live.
 
 - Se abrirá tu navegador automáticamente con SampSave listo.
+
+
 
 ## ¿QUÉ OFRECE?
 *Todo lo que se haya añadido se actualizará aquí*
