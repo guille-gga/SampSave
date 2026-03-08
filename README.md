@@ -51,6 +51,8 @@ SampSave es una biblioteca de archivos de audio, perfecta para almacenar tus maq
 - Añadir letras para tus canciones o información adicional.
 - Editar tu perfil.
 - Tiene una libreria para ver todos tus proyectos.
+- Poder poner información adicional a la pista aparte.
+- Crear hasta 3 Lyrics.
 
 
 ## AYUDA
@@ -87,9 +89,6 @@ Correción: Se pueden cargar archivos en cualquier formato --> .flac , .mp3, .wa
 - Login/Registro.
 - Facilitar acceso.
 - Acceso directo a tu SoundCloud.
-- Añadir pistas favoritas
-- Crear hasta 3 Lyrics.
-- Añadir información adicional a la pista aparte.
 - Mejorar interfaz.
 
 
