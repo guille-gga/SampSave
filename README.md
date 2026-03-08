@@ -20,6 +20,7 @@ ENLACE 🔗
 ## ¿QUÉ OFRECE?
 *Todo lo que se haya añadido se actualizará aquí*
 
+- Facil acceso.
 - Subir tus maquetas en un ambiente privado.
 - Actualizar tus maquetas en un mismo lugar.
 - Puedes comparas versiones y escuchar las versiones nuevas y las antiguas.
@@ -63,7 +64,6 @@ Correción: Se pueden cargar archivos en cualquier formato --> .flac , .mp3, .wa
 *Cosas que quedan por añadir*
 
 - Login/Registro.
-- Facilitar acceso.
 - Acceso directo a tu SoundCloud.
 - Mejorar interfaz.
 
