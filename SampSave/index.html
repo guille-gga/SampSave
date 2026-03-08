@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SampSave - Studio Pro</title>
+    <title>SampSave - Ultimate Studio Social</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -15,17 +15,15 @@
             --text-dim: #94a3b8; 
             --surface: #1e1e20; 
             --input-bg: #262629;
-            --glass: rgba(255, 255, 255, 0.03);
-            --ig-color: #e1306c;
-            --sp-color: #1db954;
-            --yt-color: #ff0000;
+            --glass: rgba(0, 255, 163, 0.1);
+            --ig-color: #e1306c; --sp-color: #1db954; --yt-color: #ff0000;
         }
 
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background-color: var(--bg-dark); 
             color: var(--text-main); 
-            margin: 0; padding-bottom: 100px;
+            margin: 0; padding-bottom: 110px;
             background-image: radial-gradient(circle at top right, rgba(0, 255, 163, 0.08), transparent);
         }
 
@@ -43,47 +41,42 @@
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* HOME CARDS */
+        /* CARDS Y UI */
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
         .stat-card { background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.03); }
-        .stat-card i { color: var(--accent); margin-bottom: 10px; display: block; font-size: 18px; }
-        .stat-card b { font-size: 22px; display: block; }
-        .stat-card span { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+        .stat-card i { color: var(--accent); margin-bottom: 10px; display: block; }
 
-        .quick-action { 
-            background: linear-gradient(90deg, #1e1e20, #161618); padding: 18px; 
-            border-radius: 20px; display: flex; align-items: center; gap: 15px; 
-            margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05); cursor: pointer;
+        .feed-item { background: var(--surface); padding: 15px; border-radius: 20px; margin-bottom: 12px; border-left: 4px solid var(--accent); }
+        
+        /* BOTÓN RADAR */
+        .collab-btn { 
+            background: #1e1e20; border: 1px solid #333; color: white; padding: 15px; 
+            border-radius: 18px; display: flex; align-items: center; justify-content: center; 
+            gap: 10px; margin-bottom: 20px; cursor: pointer; transition: 0.3s; font-weight: 800;
         }
-
-        /* PERFIL SOCIAL */
-        .social-link-btn {
-            display: flex; align-items: center; gap: 12px; padding: 15px; border-radius: 18px;
-            background: var(--surface); text-decoration: none; color: white; margin-bottom: 10px;
-            border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; font-weight: 600;
+        .collab-btn.searching { 
+            background: var(--glass); border-color: var(--accent); color: var(--accent);
+            animation: pulse 2s infinite;
         }
-        .social-link-btn:hover { transform: translateX(5px); background: var(--input-bg); }
-        .social-link-btn i { font-size: 20px; width: 25px; text-align: center; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 163, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(0, 255, 163, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 255, 163, 0); } }
 
-        /* REPRODUCTOR */
+        /* PERFIL */
+        .profile-view-header { position: relative; width: 100%; height: 140px; border-radius: 25px; overflow: hidden; margin-bottom: 55px; background: #1a1a1c; }
+        .avatar-circle { width: 85px; height: 85px; border-radius: 25px; border: 5px solid var(--bg-dark); background: #222; position: absolute; bottom: -35px; left: 20px; z-index: 2; overflow: hidden; }
+
+        .social-link-btn { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 15px; background: var(--surface); text-decoration: none; color: white; margin-bottom: 8px; font-size: 14px; border: 1px solid rgba(255,255,255,0.05); }
+
+        /* REPRODUCTOR Y TABS */
         .player-card { background: #111112; padding: 20px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
         audio { width: 100%; height: 35px; margin-top: 10px; filter: invert(90%) hue-rotate(100deg); }
-
-        /* PESTAÑAS */
         .lyric-tabs { display: flex; gap: 5px; margin: 15px 0; background: #000; padding: 4px; border-radius: 12px; }
         .tab-btn { flex: 1; padding: 8px; font-size: 10px; font-weight: 800; background: transparent; border-radius: 10px; color: var(--text-dim); border: none; cursor: pointer; }
         .tab-btn.active { background: var(--surface); color: var(--accent); }
 
-        /* PERFIL ESTRUCTURA */
-        .profile-view-header { position: relative; width: 100%; height: 150px; border-radius: 25px; overflow: hidden; margin-bottom: 55px; background: #1a1a1c; }
-        .avatar-circle { width: 85px; height: 85px; border-radius: 25px; border: 5px solid var(--bg-dark); background: #222; position: absolute; bottom: -35px; left: 20px; z-index: 2; overflow: hidden; }
-
-        .upload-zone { border: 2px dashed #333; padding: 30px; border-radius: 20px; text-align: center; margin-bottom: 15px; cursor: pointer; transition: 0.3s; }
-        .upload-zone:hover { border-color: var(--accent); background: rgba(0,255,163,0.02); }
-
+        .upload-zone { border: 2px dashed #333; padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 15px; cursor: pointer; }
         input, textarea { width: 100%; padding: 15px; background: var(--input-bg); border: 1px solid rgba(255,255,255,0.05); color: white; border-radius: 15px; margin-bottom: 12px; box-sizing: border-box; font-family: inherit; }
         button { padding: 16px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; width: 100%; }
-        .btn-accent { background: var(--accent); color: black; box-shadow: 0 4px 15px var(--glass); }
+        .btn-accent { background: var(--accent); color: black; }
         .project-card { background: var(--card-bg); padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-radius: 18px; border: 1px solid rgba(255,255,255,0.03); }
     </style>
 </head>
@@ -91,11 +84,8 @@
 
     <section id="auth-screen" class="active">
         <div style="text-align:center; padding-top:100px;">
-            <div style="width: 80px; height: 80px; background: var(--accent); border-radius: 25px; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,255,163,0.2);">
-                <i class="fas fa-bolt" style="color: black; font-size: 35px;"></i>
-            </div>
-            <h1 style="font-weight: 800; font-size: 32px; margin-bottom: 5px;">SampSave</h1>
-            <p style="color: var(--text-dim); margin-bottom: 30px;">Tu estudio personal en la nube</p>
+            <div style="width: 80px; height: 80px; background: var(--accent); border-radius: 25px; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-bolt" style="color: black; font-size: 35px;"></i></div>
+            <h1>SampSave</h1>
             <input type="text" id="login-user" placeholder="Escribe tu A.K.A">
             <button class="btn-accent" onclick="handleAuth()">COMENZAR SESIÓN</button>
         </div>
@@ -110,35 +100,20 @@
         </nav>
 
         <section id="home">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px;">
-                <div>
-                    <h2 style="margin:0; font-size: 26px;">Studio Central</h2>
-                    <p style="color:var(--text-dim); margin:5px 0 0; font-size: 13px;" id="home-greeting"></p>
-                </div>
-                <div style="width: 55px; height: 55px; border-radius: 18px; background: #222; overflow: hidden; border: 2px solid var(--accent);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 id="home-greeting" style="margin:0;">Hola</h2>
+                <div style="width: 45px; height: 45px; border-radius: 12px; background: #222; overflow: hidden; border: 2px solid var(--accent);">
                     <img src="" id="home-avatar-img" style="display:none; width:100%; height:100%; object-fit:cover;">
                 </div>
             </div>
-
-            <div class="stat-grid">
-                <div class="stat-card">
-                    <i class="fas fa-music"></i>
-                    <b id="stat-tracks">0</b>
-                    <span>Maquetas</span>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-history"></i>
-                    <b id="stat-vers">0</b>
-                    <span>Versiones</span>
-                </div>
-            </div>
-
-            <h4 style="margin-bottom: 15px; color: var(--text-dim); font-size: 12px; letter-spacing: 1px;">ACCESOS RÁPIDOS</h4>
             
-            <div class="quick-action" onclick="openNewProject()">
-                <div style="background: rgba(0,255,163,0.1); padding: 12px; border-radius: 12px; color: var(--accent);"><i class="fas fa-microphone"></i></div>
-                <div style="flex:1"><b>Subir Grabación</b><br><small style="color:var(--text-dim)">Nuevo track</small></div>
+            <div class="stat-grid">
+                <div class="stat-card"><i class="fas fa-music"></i><b id="stat-tracks">0</b><span>Proyectos</span></div>
+                <div class="stat-card"><i class="fas fa-fire"></i><b>12</b><span>Días Activo</span></div>
             </div>
+
+            <h4 style="font-size: 11px; color: var(--accent); letter-spacing: 1px;">FEED COMUNIDAD</h4>
+            <div id="community-feed"></div>
         </section>
 
         <section id="library">
@@ -166,54 +141,42 @@
                 <button class="tab-btn" onclick="switchLyric(1)">LETRA B</button>
                 <button class="tab-btn" onclick="switchLyric(2)">NOTAS</button>
             </div>
-            <textarea id="lyrics-area" style="height:200px; line-height: 1.6;" oninput="saveLyrics()"></textarea>
+            <textarea id="lyrics-area" style="height:150px;" oninput="saveLyrics()"></textarea>
+            
+            <button class="btn-accent" onclick="publishToFeed()"><i class="fas fa-share"></i> LANZAR A COMUNIDAD</button>
             <div id="history-container"></div>
-            <button class="btn-accent" style="margin-top:20px;" onclick="navTo('update-version')">NUEVA VERSIÓN</button>
+            <button class="btn-accent" style="margin-top:15px; background: #333; color: white;" onclick="navTo('update-version')">NUEVA VERSIÓN</button>
         </section>
 
         <section id="view-profile">
             <div class="profile-view-header">
                 <img src="" id="p-bg-img" style="display:none; width:100%; height:100%; object-fit:cover;">
-                <div class="avatar-circle">
-                    <img src="" id="p-avatar-img" style="display:none; width:100%; height:100%; object-fit:cover;">
-                </div>
+                <div class="avatar-circle"><img src="" id="p-avatar-img" style="display:none; width:100%; height:100%; object-fit:cover;"></div>
             </div>
-            <h2 id="p-name-title" style="margin-bottom: 5px;">Artista</h2>
-            <p id="p-bio-text" style="color:var(--text-dim); font-size: 14px; margin-bottom: 25px;"></p>
-            
-            <div id="social-links-container" style="margin-bottom: 25px;">
-                </div>
+            <h2 id="p-name-title" style="margin:0;">Artista</h2>
+            <p id="p-bio-text" style="color:var(--text-dim); font-size: 14px; margin-bottom: 20px;"></p>
 
-            <button class="btn-accent" onclick="navTo('edit-profile')">CONFIGURAR ESTUDIO</button>
+            <div id="collab-status" class="collab-btn" onclick="toggleCollab()">
+                <i class="fas fa-broadcast-tower"></i> <span id="collab-text">Buscar Colaboración</span>
+            </div>
+
+            <div id="social-links-container" style="margin-bottom: 20px;"></div>
+            <button class="btn-accent" style="background:#222; color:white;" onclick="navTo('edit-profile')">CONFIGURAR ESTUDIO</button>
         </section>
 
         <section id="edit-profile">
             <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
-                <i class="fas fa-chevron-left" onclick="navTo('view-profile')"></i>
-                <h2 style="margin:0;">Ajustes</h2>
+                <i class="fas fa-chevron-left" onclick="navTo('view-profile')"></i><h2>Ajustes</h2>
             </div>
-            <div class="upload-zone" onclick="document.getElementById('bg-input').click()">Banner Studio</div>
+            <div class="upload-zone" onclick="document.getElementById('bg-input').click()">Banner</div>
             <input type="file" id="bg-input" hidden accept="image/*" onchange="handleImage(this, 'bg')">
-            <div class="upload-zone" onclick="document.getElementById('avatar-input').click()">Foto de Perfil</div>
+            <div class="upload-zone" onclick="document.getElementById('avatar-input').click()">Avatar</div>
             <input type="file" id="avatar-input" hidden accept="image/*" onchange="handleImage(this, 'avatar')">
             
-            <input type="text" id="p-edit-name" placeholder="Nombre Artístico">
-            <textarea id="p-edit-bio" placeholder="Bio o descripción..."></textarea>
-            
-            <h4 style="margin: 10px 0; font-size: 13px; color: var(--accent);">REDES SOCIALES (ENLACES)</h4>
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-                <i class="fab fa-instagram" style="color:var(--ig-color)"></i>
-                <input type="text" id="p-edit-ig" placeholder="Enlace de Instagram" style="margin-bottom:0">
-            </div>
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-                <i class="fab fa-spotify" style="color:var(--sp-color)"></i>
-                <input type="text" id="p-edit-sp" placeholder="Enlace de Spotify" style="margin-bottom:0">
-            </div>
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
-                <i class="fab fa-youtube" style="color:var(--yt-color)"></i>
-                <input type="text" id="p-edit-yt" placeholder="Enlace de YouTube" style="margin-bottom:0">
-            </div>
-
+            <input type="text" id="p-edit-name" placeholder="A.K.A">
+            <textarea id="p-edit-bio" placeholder="Bio..."></textarea>
+            <input type="text" id="p-edit-ig" placeholder="Link Instagram">
+            <input type="text" id="p-edit-sp" placeholder="Link Spotify">
             <button class="btn-accent" onclick="saveProfile()">GUARDAR CAMBIOS</button>
         </section>
 
@@ -224,55 +187,46 @@
             </div>
             <input type="file" id="file-input" hidden accept="audio/*" onchange="checkFile(this, 'save-btn', 'file-status')">
             <input type="text" id="name-input" placeholder="Nombre del track">
-            <input type="text" id="ver-input" placeholder="Versión (Maqueta, etc)">
-            <button id="save-btn" class="btn-accent" disabled onclick="createProject()">PUBLICAR</button>
+            <input type="text" id="ver-input" placeholder="Versión (Ej: Maqueta 1)">
+            <button id="save-btn" class="btn-accent" disabled onclick="createProject()">CREAR PROYECTO</button>
         </section>
 
         <section id="update-version">
-            <h2>Actualizar Track</h2>
-            <div class="upload-zone" onclick="document.getElementById('up-file-input').click()">
-                <span id="up-file-status">Elegir nuevo audio</span>
-            </div>
-            <input type="file" id="up-file-input" hidden accept="audio/*" onchange="checkFile(this, 'up-btn', 'up-file-status')">
+            <h2>Añadir Versión</h2>
+            <div class="upload-zone" onclick="document.getElementById('up-file-input').click()">Seleccionar Audio</div>
+            <input type="file" id="up-file-input" hidden accept="audio/*" onchange="checkFile(this, 'up-btn', 'up-status')">
+            <p id="up-status"></p>
             <input type="text" id="up-ver-name" placeholder="Nombre de la versión">
-            <button id="up-btn" class="btn-accent" disabled onclick="addVersion()">AÑADIR</button>
+            <button id="up-btn" class="btn-accent" disabled onclick="addVersion()">ACTUALIZAR</button>
         </section>
     </div>
 
     <script>
         let db;
-        let projects = [];
+        let projects = JSON.parse(localStorage.getItem('ss_projects')) || [];
+        let feed = JSON.parse(localStorage.getItem('ss_feed')) || [];
         let user = JSON.parse(localStorage.getItem('ss_user')) || { 
             name: '', loggedIn: false, bio: '', img: null, bg: null, 
-            social: { ig: '', sp: '', yt: '' } 
+            searching: false, social: { ig: '', sp: '' } 
         };
         let currentIdx = null;
         let activeLyricIdx = 0;
 
-        const request = indexedDB.open("SampSave_Studio", 3);
-        request.onupgradeneeded = e => {
-            let d = e.target.result;
-            if(!d.objectStoreNames.contains("files")) d.createObjectStore("files", { keyPath: "id" });
-        };
-        request.onsuccess = e => { db = e.target.result; init(); };
-
-        function init() {
-            projects = JSON.parse(localStorage.getItem('ss_projects')) || [];
-            if (user.loggedIn) showApp();
-        }
+        const request = indexedDB.open("SampSave_Studio_V3", 1);
+        request.onupgradeneeded = e => { e.target.result.createObjectStore("files", { keyPath: "id" }); };
+        request.onsuccess = e => { db = e.target.result; if(user.loggedIn) showApp(); };
 
         function handleAuth() {
             const n = document.getElementById('login-user').value;
-            if(!n) return alert("Introduce tu nombre");
-            user.name = n; user.loggedIn = true;
+            if(!n) return; user.name = n; user.loggedIn = true;
             saveUser(); showApp();
         }
 
         function showApp() {
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('main-ui').style.display = 'block';
-            updateProfileUI(); updateStats(); renderLibrary(); navTo('home');
-            document.getElementById('home-greeting').innerText = "Bienvenido de nuevo, " + user.name;
+            document.getElementById('home-greeting').innerText = "Hola, " + user.name;
+            updateProfileUI(); updateStats(); renderLibrary(); renderFeed(); navTo('home');
         }
 
         function navTo(id, el) {
@@ -284,62 +238,29 @@
             }
         }
 
-        function saveProfile() {
-            user.name = document.getElementById('p-edit-name').value || user.name;
-            user.bio = document.getElementById('p-edit-bio').value || user.bio;
-            user.social = {
-                ig: document.getElementById('p-edit-ig').value,
-                sp: document.getElementById('p-edit-sp').value,
-                yt: document.getElementById('p-edit-yt').value
-            };
-            saveUser(); updateProfileUI(); navTo('view-profile');
+        function toggleCollab() {
+            user.searching = !user.searching; saveUser(); updateProfileUI();
         }
 
         function updateProfileUI() {
             document.getElementById('p-name-title').innerText = user.name;
-            document.getElementById('p-bio-text').innerText = user.bio || "No bio disponible.";
+            document.getElementById('p-bio-text').innerText = user.bio || "Sin biografía.";
+            const btn = document.getElementById('collab-status');
+            btn.className = user.searching ? 'collab-btn searching' : 'collab-btn';
+            document.getElementById('collab-text').innerText = user.searching ? "Buscando Colaboración..." : "Buscar Colaboración";
             
-            // Inyectar RRSS
             const container = document.getElementById('social-links-container');
             container.innerHTML = "";
-            if(user.social.ig) container.innerHTML += `<a href="${user.social.ig}" target="_blank" class="social-link-btn"><i class="fab fa-instagram" style="color:var(--ig-color)"></i> Instagram</a>`;
-            if(user.social.sp) container.innerHTML += `<a href="${user.social.sp}" target="_blank" class="social-link-btn"><i class="fab fa-spotify" style="color:var(--sp-color)"></i> Spotify</a>`;
-            if(user.social.yt) container.innerHTML += `<a href="${user.social.yt}" target="_blank" class="social-link-btn"><i class="fab fa-youtube" style="color:var(--yt-color)"></i> YouTube</a>`;
+            if(user.social.ig) container.innerHTML += `<a href="${user.social.ig}" class="social-link-btn"><i class="fab fa-instagram"></i> Instagram</a>`;
+            if(user.social.sp) container.innerHTML += `<a href="${user.social.sp}" class="social-link-btn"><i class="fab fa-spotify"></i> Spotify</a>`;
             
-            if(container.innerHTML === "") container.innerHTML = "<small style='opacity:0.3'>Configura tus redes en Ajustes</small>";
-
-            // Rellenar inputs de edición
+            if(user.img) { document.getElementById('p-avatar-img').src = user.img; document.getElementById('p-avatar-img').style.display = 'block'; document.getElementById('home-avatar-img').src = user.img; document.getElementById('home-avatar-img').style.display = 'block'; }
+            if(user.bg) { document.getElementById('p-bg-img').src = user.bg; document.getElementById('p-bg-img').style.display = 'block'; }
+            
             document.getElementById('p-edit-name').value = user.name;
             document.getElementById('p-edit-bio').value = user.bio;
-            document.getElementById('p-edit-ig').value = user.social.ig || '';
-            document.getElementById('p-edit-sp').value = user.social.sp || '';
-            document.getElementById('p-edit-yt').value = user.social.yt || '';
-
-            if(user.img) { 
-                document.getElementById('p-avatar-img').src = user.img; document.getElementById('p-avatar-img').style.display = 'block';
-                document.getElementById('home-avatar-img').src = user.img; document.getElementById('home-avatar-img').style.display = 'block';
-            }
-            if(user.bg) { document.getElementById('p-bg-img').src = user.bg; document.getElementById('p-bg-img').style.display = 'block'; }
-        }
-
-        // --- RESTO DE FUNCIONES (Mantenidas del código original) ---
-        function updateStats() {
-            document.getElementById('stat-tracks').innerText = projects.length;
-            let totalVers = projects.reduce((acc, p) => acc + (p.history ? p.history.length : 0) + 1, 0);
-            document.getElementById('stat-vers').innerText = totalVers;
-        }
-
-        function renderLibrary() {
-            const list = document.getElementById('project-list');
-            const term = document.getElementById('library-search').value.toLowerCase();
-            list.innerHTML = '';
-            projects.filter(p => p.name.toLowerCase().includes(term)).forEach((p) => {
-                const realIdx = projects.indexOf(p);
-                list.innerHTML += `<div class="project-card" onclick="viewProject(${realIdx})">
-                    <div><b>${p.name}</b><br><small style="color:var(--accent)">${p.current.vName}</small></div>
-                    <i class="fas fa-play-circle" style="font-size: 24px; color: var(--accent);"></i>
-                </div>`;
-            });
+            document.getElementById('p-edit-ig').value = user.social.ig;
+            document.getElementById('p-edit-sp').value = user.social.sp;
         }
 
         async function createProject() {
@@ -356,10 +277,9 @@
         async function viewProject(idx) {
             currentIdx = idx; const p = projects[idx];
             document.getElementById('det-title').innerText = p.name;
-            document.getElementById('det-bpm').value = p.bpm || '';
-            document.getElementById('det-key').value = p.key || '';
+            document.getElementById('det-bpm').value = p.bpm;
+            document.getElementById('det-key').value = p.key;
             document.getElementById('player-ver-name').innerText = p.current.vName;
-            document.getElementById('det-fav').style.color = p.fav ? 'var(--accent)' : 'white';
             switchLyric(0); renderHistory(p);
             db.transaction("files").objectStore("files").get(p.current.id).onsuccess = e => {
                 if(e.target.result) document.getElementById('main-audio').src = URL.createObjectURL(e.target.result.blob);
@@ -367,34 +287,60 @@
             navTo('project-details');
         }
 
+        function publishToFeed() {
+            const p = projects[currentIdx];
+            feed.unshift({ user: user.name, trackName: p.name, date: new Date().toLocaleDateString() });
+            localStorage.setItem('ss_feed', JSON.stringify(feed.slice(0, 15)));
+            renderFeed(); alert("¡Publicado en el Feed!"); navTo('home');
+        }
+
+        function renderFeed() {
+            const container = document.getElementById('community-feed');
+            container.innerHTML = feed.length ? '' : '<p style="opacity:0.5">No hay novedades.</p>';
+            feed.forEach(item => {
+                container.innerHTML += `<div class="feed-item"><small style="color:var(--accent)">@${item.user}</small><div style="font-weight:800">${item.trackName}</div><small style="opacity:0.5">Lanzado: ${item.date}</small></div>`;
+            });
+        }
+
+        function renderLibrary() {
+            const list = document.getElementById('project-list');
+            const term = document.getElementById('library-search').value.toLowerCase();
+            list.innerHTML = '';
+            projects.filter(p => p.name.toLowerCase().includes(term)).forEach((p, i) => {
+                list.innerHTML += `<div class="project-card" onclick="viewProject(${projects.indexOf(p)})"><div><b>${p.name}</b><br><small>${p.current.vName}</small></div><i class="fas fa-play-circle" style="color:var(--accent)"></i></div>`;
+            });
+        }
+
         function switchLyric(idx) {
-            activeLyricIdx = idx;
-            document.getElementById('lyrics-area').value = projects[currentIdx].lyrics[idx] || "";
-            document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.classList.toggle('active', i === idx));
+            activeLyricIdx = idx; document.getElementById('lyrics-area').value = projects[currentIdx].lyrics[idx];
+            document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
         }
 
         function saveLyrics() { projects[currentIdx].lyrics[activeLyricIdx] = document.getElementById('lyrics-area').value; saveProjects(); }
         function saveExtra() { projects[currentIdx].bpm = document.getElementById('det-bpm').value; projects[currentIdx].key = document.getElementById('det-key').value; saveProjects(); }
-
+        
         function handleImage(input, type) {
-            if (input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = e => {
-                    if(type === 'avatar') user.img = e.target.result;
-                    else user.bg = e.target.result;
-                    saveUser(); updateProfileUI();
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
+            const reader = new FileReader();
+            reader.onload = e => { if(type === 'avatar') user.img = e.target.result; else user.bg = e.target.result; saveUser(); updateProfileUI(); };
+            reader.readAsDataURL(input.files[0]);
         }
 
-        function checkFile(input, btnId, statusId) {
-            if(input.files[0]) {
-                document.getElementById(statusId).innerText = "✓ Seleccionado";
-                document.getElementById(btnId).disabled = false;
-            }
+        function saveProfile() {
+            user.name = document.getElementById('p-edit-name').value;
+            user.bio = document.getElementById('p-edit-bio').value;
+            user.social = { ig: document.getElementById('p-edit-ig').value, sp: document.getElementById('p-edit-sp').value };
+            saveUser(); updateProfileUI(); navTo('view-profile');
         }
 
+        function renderHistory(p) {
+            const list = document.getElementById('history-container');
+            list.innerHTML = p.history.length ? '<br><small>HISTORIAL</small>' : '';
+            p.history.forEach(v => {
+                list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px; background:var(--surface); margin-top:5px; border-radius:10px;"><span>${v.vName}</span><i class="fas fa-play" onclick="playVer('${v.id}')"></i></div>`;
+            });
+        }
+
+        function playVer(id) { db.transaction("files").objectStore("files").get(id).onsuccess = e => { document.getElementById('main-audio').src = URL.createObjectURL(e.target.result.blob); document.getElementById('main-audio').play(); }; }
         async function addVersion() {
             const file = document.getElementById('up-file-input').files[0];
             const fId = "aud_" + Date.now();
@@ -405,28 +351,11 @@
             };
         }
 
-        function renderHistory(p) {
-            const list = document.getElementById('history-container');
-            list.innerHTML = p.history.length ? '<br><small style="opacity:0.5">HISTORIAL</small>' : '';
-            p.history.slice().reverse().forEach(v => {
-                list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:12px; background:var(--surface); margin-top:8px; border-radius:15px; border:1px solid rgba(255,255,255,0.02);">
-                    <span style="font-size:13px;">${v.vName}</span><i class="fas fa-play" onclick="playVersion('${v.id}')"></i>
-                </div>`;
-            });
-        }
-
-        function playVersion(id) {
-            db.transaction("files").objectStore("files").get(id).onsuccess = e => {
-                document.getElementById('main-audio').src = URL.createObjectURL(e.target.result.blob);
-                document.getElementById('main-audio').play();
-            };
-        }
-
         function saveUser() { localStorage.setItem('ss_user', JSON.stringify(user)); }
         function saveProjects() { localStorage.setItem('ss_projects', JSON.stringify(projects)); }
-        function toggleFav() { projects[currentIdx].fav = !projects[currentIdx].fav; saveProjects(); viewProject(currentIdx); }
-        function openNewProject() { navTo('add-audio'); document.getElementById('save-btn').disabled = true; document.getElementById('file-status').innerText = "Elegir Audio"; }
-        function deleteTrack() { if(confirm("¿Borrar?")) { projects.splice(currentIdx,1); saveProjects(); renderLibrary(); navTo('library'); } }
+        function updateStats() { document.getElementById('stat-tracks').innerText = projects.length; }
+        function checkFile(i, b, s) { if(i.files[0]) { document.getElementById(s).innerText = "Seleccionado"; document.getElementById(b).disabled = false; } }
+        function openNewProject() { navTo('add-audio'); }
     </script>
 </body>
 </html>
