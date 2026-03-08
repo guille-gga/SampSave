@@ -7,38 +7,11 @@ SampSave es una biblioteca de archivos de audio, perfecta para almacenar tus maq
 
 # ¿CÓMO EMPEZAR A USAR?
 
-**1. Descargar el Proyecto**
-
-- Entra en el enlace de GitHub: https://github.com/guille-gga/SampSave.
-
-- Busca el botón verde que pone "Code".
-
-- Haz clic en Download ZIP.
-
-- Descomprime esa carpeta en tu ordenador.
-
-**2. Abrir en Visual Studio Code**
-
-- Abre Visual Studio Code.
-
-- Ve al menú de arriba en File > Archivo > Abrir Carpeta.
-
-- Selecciona la carpeta SampSave donde está el Index, Css, y JavaScript. 
-
-- En la izquierda verás un archivo llamado index.html. Haz clic en él para que se abra.
-
-**3. Correr el programa.**
-
-*Para que funcione el programa necesitamos que esté en un servidor local*
-
-- Usa la extensión Live Server
-
-- Mira eabajo enla derecha de la pantalla.
-
-- Haz clic en el botón que pone Go Live.
-
-- Se abrirá tu navegador automáticamente con SampSave listo.
-
+Todo el proceso se ha reducido a un enlace URL 
+______________
+|            | 
+|  [SampSave](https://samp-save-85fe.vercel.app/)  |
+|____________|
 
 
 ## ¿QUÉ OFRECE?
