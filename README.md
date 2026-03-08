@@ -10,13 +10,11 @@ SampSave es una biblioteca de archivos de audio, perfecta para almacenar tus maq
 Todo el proceso se ha reducido a un enlace URL 
 
 
-...............
+------------------------------------------------------
 
 |  [SampSave](https://samp-save-85fe.vercel.app/)  |
 
-|            |
-
-...............
+.......................................................
 
 ## ¿QUÉ OFRECE?
 *Todo lo que se haya añadido se actualizará aquí*
