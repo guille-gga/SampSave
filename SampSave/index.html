@@ -3,388 +3,430 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SampSave - Studio Edition</title>
+    <title>SampSave - Studio Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #090909; --card-bg: #181818; --accent: #1db954;
-            --text-main: #ffffff; --text-dim: #a7a7a7; --danger: #e91e63; --blue: #1d8cf8;
+            --bg-dark: #0a0a0b; 
+            --card-bg: #161618; 
+            --accent: #00ffa3; 
+            --text-main: #ffffff; 
+            --text-dim: #94a3b8; 
+            --surface: #1e1e20; 
+            --input-bg: #262629;
+            --glass: rgba(255, 255, 255, 0.03);
+            --ig-color: #e1306c;
+            --sp-color: #1db954;
+            --yt-color: #ff0000;
         }
 
-        body { font-family: 'Inter', 'Segoe UI', sans-serif; background-color: var(--bg-dark); color: var(--text-main); margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding-bottom: 50px;}
-        
-        /* --- HEADER & NAV --- */
-        nav { width: 100%; max-width: 600px; display: flex; justify-content: space-around; padding: 25px 0; border-bottom: 1px solid #282828; position: sticky; top: 0; background: var(--bg-dark); z-index: 90; }
-        nav i { font-size: 22px; cursor: pointer; color: var(--text-dim); transition: 0.3s; }
-        nav i:hover { color: var(--accent); transform: scale(1.1); }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            margin: 0; padding-bottom: 100px;
+            background-image: radial-gradient(circle at top right, rgba(0, 255, 163, 0.08), transparent);
+        }
 
-        section { width: 90%; max-width: 500px; padding: 20px 0; display: none; animation: fadeIn 0.4s ease; }
+        /* NAVEGACIÓN */
+        nav { 
+            width: 90%; max-width: 400px; display: flex; justify-content: space-around; padding: 12px 0; 
+            border: 1px solid rgba(255,255,255,0.1); position: fixed; bottom: 20px; left: 50%;
+            transform: translateX(-50%); background: rgba(18, 18, 20, 0.95); backdrop-filter: blur(20px); 
+            z-index: 1000; border-radius: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+        nav i { font-size: 20px; cursor: pointer; color: var(--text-dim); transition: 0.3s; }
+        nav i.active-nav { color: var(--accent); transform: scale(1.1); text-shadow: 0 0 10px var(--accent); }
+
+        section { width: 92%; max-width: 500px; padding: 20px 0; display: none; margin: 0 auto; animation: fadeIn 0.4s ease; }
         .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- PERFIL DROPDOWN --- */
-        #profile-menu-btn {
-            position: absolute; right: 20px; top: 20px; width: 42px; height: 42px; 
-            border-radius: 50%; background: #282828; border: 2px solid transparent;
-            cursor: pointer; overflow: hidden; display: flex; align-items: center; justify-content: center; z-index: 100; transition: 0.3s;
+        /* HOME CARDS */
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
+        .stat-card { background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.03); }
+        .stat-card i { color: var(--accent); margin-bottom: 10px; display: block; font-size: 18px; }
+        .stat-card b { font-size: 22px; display: block; }
+        .stat-card span { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+
+        .quick-action { 
+            background: linear-gradient(90deg, #1e1e20, #161618); padding: 18px; 
+            border-radius: 20px; display: flex; align-items: center; gap: 15px; 
+            margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05); cursor: pointer;
         }
-        #profile-menu-btn:hover { border-color: var(--accent); }
-        #profile-menu-btn img { width: 100%; height: 100%; object-fit: cover; }
-        
-        #profile-dropdown {
-            position: absolute; right: 20px; top: 70px; background: #282828; border-radius: 4px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 101; display: none; min-width: 180px; padding: 5px;
+
+        /* PERFIL SOCIAL */
+        .social-link-btn {
+            display: flex; align-items: center; gap: 12px; padding: 15px; border-radius: 18px;
+            background: var(--surface); text-decoration: none; color: white; margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; font-weight: 600;
         }
-        #profile-dropdown button { 
-            width: 100%; padding: 12px; text-align: left; background: none; border: none; 
-            color: white; cursor: pointer; font-size: 14px; border-radius: 2px;
-        }
-        #profile-dropdown button:hover { background: #3e3e3e; }
+        .social-link-btn:hover { transform: translateX(5px); background: var(--input-bg); }
+        .social-link-btn i { font-size: 20px; width: 25px; text-align: center; }
 
-        /* --- CARDS & FORMS --- */
-        .project-card { background: var(--card-bg); padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px; transition: 0.3s; }
-        .project-card:hover { background: #282828; }
-        
-        .upload-area { border: 2px dashed #333; padding: 50px; text-align: center; border-radius: 12px; margin-bottom: 25px; cursor: pointer; color: var(--text-dim); }
-        .upload-area:hover { border-color: var(--accent); color: white; background: #121212; }
-        
-        input, textarea { width: 100%; padding: 14px; background: #333; border: 1px solid transparent; color: white; border-radius: 6px; margin-bottom: 15px; box-sizing: border-box; font-size: 15px;}
-        input:focus { border-color: var(--accent); outline: none; }
-        
-        button { padding: 14px 24px; border-radius: 50px; border: none; background: #f6f6f6; color: black; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; }
-        button:hover { transform: scale(1.04); }
-        .btn-main { background: var(--accent); color: black; width: 100%; margin-top: 10px; }
+        /* REPRODUCTOR */
+        .player-card { background: #111112; padding: 20px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
+        audio { width: 100%; height: 35px; margin-top: 10px; filter: invert(90%) hue-rotate(100deg); }
 
-        /* --- PERFIL DESIGN --- */
-        .profile-header { text-align: center; position: relative; padding: 20px 0; }
-        .profile-avatar-xl { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.5); margin-bottom: 20px; border: 4px solid var(--accent); }
-        .profile-badge { background: var(--accent); color: black; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
-        
-        .edit-avatar-container { position: relative; width: 120px; height: 120px; margin: 0 auto 20px; cursor: pointer; }
-        .edit-avatar-container img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; opacity: 0.6; }
-        .edit-avatar-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 20px; pointer-events: none; }
+        /* PESTAÑAS */
+        .lyric-tabs { display: flex; gap: 5px; margin: 15px 0; background: #000; padding: 4px; border-radius: 12px; }
+        .tab-btn { flex: 1; padding: 8px; font-size: 10px; font-weight: 800; background: transparent; border-radius: 10px; color: var(--text-dim); border: none; cursor: pointer; }
+        .tab-btn.active { background: var(--surface); color: var(--accent); }
 
-        /* --- PLAYER --- */
-        .main-player-unit { background: linear-gradient(180deg, #282828 0%, #181818 100%); padding: 25px; border-radius: 15px; margin: 15px 0; }
-        audio { width: 100%; filter: invert(1); margin-top: 15px; height: 35px; }
-        
-        .tag { padding: 5px 10px; border-radius: 4px; font-size: 10px; font-weight: 800; letter-spacing: 1px; }
-        .tag-current { background: var(--accent); color: black; }
-        .tag-old { background: #535353; color: white; }
+        /* PERFIL ESTRUCTURA */
+        .profile-view-header { position: relative; width: 100%; height: 150px; border-radius: 25px; overflow: hidden; margin-bottom: 55px; background: #1a1a1c; }
+        .avatar-circle { width: 85px; height: 85px; border-radius: 25px; border: 5px solid var(--bg-dark); background: #222; position: absolute; bottom: -35px; left: 20px; z-index: 2; overflow: hidden; }
+
+        .upload-zone { border: 2px dashed #333; padding: 30px; border-radius: 20px; text-align: center; margin-bottom: 15px; cursor: pointer; transition: 0.3s; }
+        .upload-zone:hover { border-color: var(--accent); background: rgba(0,255,163,0.02); }
+
+        input, textarea { width: 100%; padding: 15px; background: var(--input-bg); border: 1px solid rgba(255,255,255,0.05); color: white; border-radius: 15px; margin-bottom: 12px; box-sizing: border-box; font-family: inherit; }
+        button { padding: 16px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; width: 100%; }
+        .btn-accent { background: var(--accent); color: black; box-shadow: 0 4px 15px var(--glass); }
+        .project-card { background: var(--card-bg); padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-radius: 18px; border: 1px solid rgba(255,255,255,0.03); }
     </style>
 </head>
 <body>
 
-    <div id="profile-menu-btn" onclick="toggleDropdown()">
-        <img id="header-avatar" src="" style="display:none;">
-        <i id="header-icon" class="fas fa-user"></i>
-    </div>
-
-    <div id="profile-dropdown">
-        <button onclick="navTo('view-profile')"><i class="fas fa-user-circle"></i> Mi Perfil</button>
-        <button onclick="navTo('edit-profile')"><i class="fas fa-cog"></i> Configuración</button>
-        <hr style="border: 0; border-top: 1px solid #444;">
-        <button onclick="location.reload()"><i class="fas fa-sync"></i> Refrescar Studio</button>
-    </div>
-
-    <nav id="top-nav">
-        <i class="fas fa-home" onclick="navTo('home')"></i>
-        <i class="fas fa-plus" onclick="openNewProject()"></i>
-        <i class="fas fa-compact-disc" onclick="navTo('library')"></i>
-    </nav>
-
-    <section id="home" class="active">
-        <div style="text-align: center; margin-top: 60px;">
-            <h1 style="font-size: 48px; margin-bottom: 10px;">SampSave</h1>
-            <p style="color:var(--text-dim); font-size: 18px;">Tu flujo creativo, organizado.</p>
-            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 50px;">
-                <button onclick="openNewProject()" style="background:var(--accent); color:black; font-size: 16px; padding: 18px;">NUEVO PROYECTO</button>
-                <button onclick="navTo('library')" style="background:transparent; color:white; border: 1px solid #555;">EXPLORAR LIBRERÍA</button>
+    <section id="auth-screen" class="active">
+        <div style="text-align:center; padding-top:100px;">
+            <div style="width: 80px; height: 80px; background: var(--accent); border-radius: 25px; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,255,163,0.2);">
+                <i class="fas fa-bolt" style="color: black; font-size: 35px;"></i>
             </div>
+            <h1 style="font-weight: 800; font-size: 32px; margin-bottom: 5px;">SampSave</h1>
+            <p style="color: var(--text-dim); margin-bottom: 30px;">Tu estudio personal en la nube</p>
+            <input type="text" id="login-user" placeholder="Escribe tu A.K.A">
+            <button class="btn-accent" onclick="handleAuth()">COMENZAR SESIÓN</button>
         </div>
     </section>
 
-    <section id="library">
-        <h2 style="font-size: 28px; margin-bottom: 25px;">Tu música</h2>
-        <div id="project-list"></div>
-    </section>
+    <div id="main-ui" style="display: none;">
+        <nav>
+            <i class="fas fa-home active-nav" onclick="navTo('home', this)"></i>
+            <i class="fas fa-folder" onclick="navTo('library', this)"></i>
+            <i class="fas fa-plus" onclick="openNewProject()"></i>
+            <i class="fas fa-user-circle" onclick="navTo('view-profile', this)"></i>
+        </nav>
 
-    <section id="add-audio">
-        <h2 id="upload-title">Subir audio</h2>
-        <div class="upload-area" onclick="document.getElementById('file-input').click()">
-            <i class="fas fa-arrow-up" style="font-size: 32px; margin-bottom: 15px;"></i>
-            <p id="file-status">Haz clic para buscar archivo...</p>
-            <input type="file" id="file-input" hidden accept="audio/*" onchange="handleFileSelect()">
-        </div>
-        <input type="text" id="name-input" placeholder="Título de la canción">
-        <input type="text" id="ver-input" placeholder="Nombre de la versión (ej. Master 2024)">
-        <button id="save-btn" class="btn-main" disabled onclick="processSave()">GUARDAR EN STUDIO</button>
-    </section>
+        <section id="home">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px;">
+                <div>
+                    <h2 style="margin:0; font-size: 26px;">Studio Central</h2>
+                    <p style="color:var(--text-dim); margin:5px 0 0; font-size: 13px;" id="home-greeting"></p>
+                </div>
+                <div style="width: 55px; height: 55px; border-radius: 18px; background: #222; overflow: hidden; border: 2px solid var(--accent);">
+                    <img src="" id="home-avatar-img" style="display:none; width:100%; height:100%; object-fit:cover;">
+                </div>
+            </div>
 
-    <section id="project-details">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h2 id="det-title" style="margin:0;">Track</h2>
-            <span class="profile-badge">Estudio</span>
-        </div>
-        <div id="player-card" class="main-player-unit">
-            <span id="player-tag" class="tag tag-current">ACTUAL</span>
-            <strong id="player-ver-name" style="margin-left:10px; color:var(--accent)">---</strong>
-            <audio id="main-audio" controls></audio>
-        </div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:20px;">
-            <button onclick="openUpdate()" style="background:#333; color:white"><i class="fas fa-plus"></i> Versión</button>
-            <button onclick="deleteCurrentProject()" style="background:transparent; color:var(--danger); border:1px solid var(--danger)"><i class="fas fa-trash"></i></button>
-        </div>
-        <textarea id="notes-area" placeholder="Notas de producción, BPM, letras..." style="height:120px;" oninput="saveNotes()"></textarea>
-        <div id="history-section">
-            <h4 style="color:var(--text-dim); text-transform:uppercase; font-size:12px; letter-spacing:1px;">Historial</h4>
-            <div id="history-list"></div>
-        </div>
-    </section>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <i class="fas fa-music"></i>
+                    <b id="stat-tracks">0</b>
+                    <span>Maquetas</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-history"></i>
+                    <b id="stat-vers">0</b>
+                    <span>Versiones</span>
+                </div>
+            </div>
 
-    <section id="view-profile">
-        <div class="profile-header">
-            <img id="v-avatar" class="profile-avatar-xl" src="" style="display:none;">
-            <div id="v-icon" style="font-size:100px; color:#333; margin-bottom:20px;"><i class="fas fa-user-circle"></i></div>
-            <h1 id="v-name" style="margin:0; font-size:32px;">Nombre</h1>
-            <p id="v-country" style="color:var(--accent); font-weight:bold; margin-top:5px;"></p>
-            <div style="max-width:300px; margin: 20px auto; color:var(--text-dim); line-height:1.6;" id="v-bio"></div>
-            <button onclick="navTo('edit-profile')" style="background:#333; color:white">EDITAR PERFIL</button>
-        </div>
-    </section>
+            <h4 style="margin-bottom: 15px; color: var(--text-dim); font-size: 12px; letter-spacing: 1px;">ACCESOS RÁPIDOS</h4>
+            
+            <div class="quick-action" onclick="openNewProject()">
+                <div style="background: rgba(0,255,163,0.1); padding: 12px; border-radius: 12px; color: var(--accent);"><i class="fas fa-microphone"></i></div>
+                <div style="flex:1"><b>Subir Grabación</b><br><small style="color:var(--text-dim)">Nuevo track</small></div>
+            </div>
+        </section>
 
-    <section id="edit-profile">
-        <h2 style="margin-bottom:30px;">Editar Perfil</h2>
-        <div class="edit-avatar-container" onclick="document.getElementById('p-img-input').click()">
-            <img id="e-avatar" src="">
-            <div class="edit-avatar-overlay"><i class="fas fa-camera"></i></div>
-        </div>
-        <input type="file" id="p-img-input" hidden accept="image/*" onchange="previewImg(this)">
-        
-        <label style="font-size:12px; color:var(--text-dim);">NOMBRE ARTÍSTICO</label>
-        <input type="text" id="e-name">
-        
-        <label style="font-size:12px; color:var(--text-dim);">BIOGRAFÍA</label>
-        <textarea id="e-bio" style="height:100px;"></textarea>
-        
-        <label style="font-size:12px; color:var(--text-dim);">UBICACIÓN / PAÍS</label>
-        <input type="text" id="e-country">
-        
-        <button class="btn-main" onclick="saveUserProfile()">GUARDAR CAMBIOS</button>
-    </section>
+        <section id="library">
+            <h2>Mi Música</h2>
+            <input type="text" id="library-search" placeholder="Filtrar por nombre..." oninput="renderLibrary()">
+            <div id="project-list"></div>
+        </section>
+
+        <section id="project-details">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                <i class="fas fa-chevron-left" onclick="navTo('library')"></i>
+                <h3 id="det-title" style="flex:1; margin:0;">Track</h3>
+                <i id="det-fav" class="fas fa-heart" onclick="toggleFav()" style="cursor:pointer;"></i>
+            </div>
+            <div class="player-card">
+                <span id="player-ver-name" style="color:var(--accent); font-weight: 800; font-size: 12px;">V1</span>
+                <audio id="main-audio" controls></audio>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="det-bpm" placeholder="BPM" oninput="saveExtra()">
+                <input type="text" id="det-key" placeholder="Key" oninput="saveExtra()">
+            </div>
+            <div class="lyric-tabs">
+                <button class="tab-btn active" onclick="switchLyric(0)">LETRA A</button>
+                <button class="tab-btn" onclick="switchLyric(1)">LETRA B</button>
+                <button class="tab-btn" onclick="switchLyric(2)">NOTAS</button>
+            </div>
+            <textarea id="lyrics-area" style="height:200px; line-height: 1.6;" oninput="saveLyrics()"></textarea>
+            <div id="history-container"></div>
+            <button class="btn-accent" style="margin-top:20px;" onclick="navTo('update-version')">NUEVA VERSIÓN</button>
+        </section>
+
+        <section id="view-profile">
+            <div class="profile-view-header">
+                <img src="" id="p-bg-img" style="display:none; width:100%; height:100%; object-fit:cover;">
+                <div class="avatar-circle">
+                    <img src="" id="p-avatar-img" style="display:none; width:100%; height:100%; object-fit:cover;">
+                </div>
+            </div>
+            <h2 id="p-name-title" style="margin-bottom: 5px;">Artista</h2>
+            <p id="p-bio-text" style="color:var(--text-dim); font-size: 14px; margin-bottom: 25px;"></p>
+            
+            <div id="social-links-container" style="margin-bottom: 25px;">
+                </div>
+
+            <button class="btn-accent" onclick="navTo('edit-profile')">CONFIGURAR ESTUDIO</button>
+        </section>
+
+        <section id="edit-profile">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+                <i class="fas fa-chevron-left" onclick="navTo('view-profile')"></i>
+                <h2 style="margin:0;">Ajustes</h2>
+            </div>
+            <div class="upload-zone" onclick="document.getElementById('bg-input').click()">Banner Studio</div>
+            <input type="file" id="bg-input" hidden accept="image/*" onchange="handleImage(this, 'bg')">
+            <div class="upload-zone" onclick="document.getElementById('avatar-input').click()">Foto de Perfil</div>
+            <input type="file" id="avatar-input" hidden accept="image/*" onchange="handleImage(this, 'avatar')">
+            
+            <input type="text" id="p-edit-name" placeholder="Nombre Artístico">
+            <textarea id="p-edit-bio" placeholder="Bio o descripción..."></textarea>
+            
+            <h4 style="margin: 10px 0; font-size: 13px; color: var(--accent);">REDES SOCIALES (ENLACES)</h4>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                <i class="fab fa-instagram" style="color:var(--ig-color)"></i>
+                <input type="text" id="p-edit-ig" placeholder="Enlace de Instagram" style="margin-bottom:0">
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                <i class="fab fa-spotify" style="color:var(--sp-color)"></i>
+                <input type="text" id="p-edit-sp" placeholder="Enlace de Spotify" style="margin-bottom:0">
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+                <i class="fab fa-youtube" style="color:var(--yt-color)"></i>
+                <input type="text" id="p-edit-yt" placeholder="Enlace de YouTube" style="margin-bottom:0">
+            </div>
+
+            <button class="btn-accent" onclick="saveProfile()">GUARDAR CAMBIOS</button>
+        </section>
+
+        <section id="add-audio">
+            <h2>Nuevo Proyecto</h2>
+            <div class="upload-zone" onclick="document.getElementById('file-input').click()">
+                <i class="fas fa-cloud-upload-alt"></i><br><span id="file-status">Elegir audio</span>
+            </div>
+            <input type="file" id="file-input" hidden accept="audio/*" onchange="checkFile(this, 'save-btn', 'file-status')">
+            <input type="text" id="name-input" placeholder="Nombre del track">
+            <input type="text" id="ver-input" placeholder="Versión (Maqueta, etc)">
+            <button id="save-btn" class="btn-accent" disabled onclick="createProject()">PUBLICAR</button>
+        </section>
+
+        <section id="update-version">
+            <h2>Actualizar Track</h2>
+            <div class="upload-zone" onclick="document.getElementById('up-file-input').click()">
+                <span id="up-file-status">Elegir nuevo audio</span>
+            </div>
+            <input type="file" id="up-file-input" hidden accept="audio/*" onchange="checkFile(this, 'up-btn', 'up-file-status')">
+            <input type="text" id="up-ver-name" placeholder="Nombre de la versión">
+            <button id="up-btn" class="btn-accent" disabled onclick="addVersion()">AÑADIR</button>
+        </section>
+    </div>
 
     <script>
         let db;
         let projects = [];
-        let user = { name: 'Músico', bio: 'Bienvenido a mi estudio.', country: 'España', img: null };
+        let user = JSON.parse(localStorage.getItem('ss_user')) || { 
+            name: '', loggedIn: false, bio: '', img: null, bg: null, 
+            social: { ig: '', sp: '', yt: '' } 
+        };
         let currentIdx = null;
-        let mode = 'new';
+        let activeLyricIdx = 0;
 
-        // --- MOTOR DE PERSISTENCIA ---
-        const request = indexedDB.open("SampSave_Studio_V3", 1);
+        const request = indexedDB.open("SampSave_Studio", 3);
         request.onupgradeneeded = e => {
-            e.target.result.createObjectStore("files", { keyPath: "id" });
+            let d = e.target.result;
+            if(!d.objectStoreNames.contains("files")) d.createObjectStore("files", { keyPath: "id" });
         };
-        request.onsuccess = e => { 
-            db = e.target.result; 
-            loadAllData();
-        };
+        request.onsuccess = e => { db = e.target.result; init(); };
 
-        function loadAllData() {
-            // Cargar proyectos e historial
-            projects = JSON.parse(localStorage.getItem('ss_projects_v3')) || [];
-            // Cargar perfil
-            const savedUser = localStorage.getItem('ss_user_v3');
-            if(savedUser) user = JSON.parse(savedUser);
-            
-            renderLibrary();
-            renderUser();
-            console.log("Datos cargados correctamente.");
+        function init() {
+            projects = JSON.parse(localStorage.getItem('ss_projects')) || [];
+            if (user.loggedIn) showApp();
         }
 
-        // --- NAVEGACIÓN ---
-        function navTo(id) {
+        function handleAuth() {
+            const n = document.getElementById('login-user').value;
+            if(!n) return alert("Introduce tu nombre");
+            user.name = n; user.loggedIn = true;
+            saveUser(); showApp();
+        }
+
+        function showApp() {
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('main-ui').style.display = 'block';
+            updateProfileUI(); updateStats(); renderLibrary(); navTo('home');
+            document.getElementById('home-greeting').innerText = "Bienvenido de nuevo, " + user.name;
+        }
+
+        function navTo(id, el) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            document.getElementById('profile-dropdown').style.display = 'none';
-            window.scrollTo(0,0);
+            if(el) {
+                document.querySelectorAll('nav i').forEach(i => i.classList.remove('active-nav'));
+                el.classList.add('active-nav');
+            }
         }
 
-        function toggleDropdown() {
-            let d = document.getElementById('profile-dropdown');
-            d.style.display = d.style.display === 'block' ? 'none' : 'block';
+        function saveProfile() {
+            user.name = document.getElementById('p-edit-name').value || user.name;
+            user.bio = document.getElementById('p-edit-bio').value || user.bio;
+            user.social = {
+                ig: document.getElementById('p-edit-ig').value,
+                sp: document.getElementById('p-edit-sp').value,
+                yt: document.getElementById('p-edit-yt').value
+            };
+            saveUser(); updateProfileUI(); navTo('view-profile');
         }
 
-        // --- GESTIÓN DE PERFIL ---
-        function renderUser() {
-            // Actualizar botones y cabeceras
-            const avs = [document.getElementById('header-avatar'), document.getElementById('v-avatar'), document.getElementById('e-avatar')];
-            avs.forEach(a => { 
-                if(user.img) { a.src = user.img; a.style.display = 'block'; } 
+        function updateProfileUI() {
+            document.getElementById('p-name-title').innerText = user.name;
+            document.getElementById('p-bio-text').innerText = user.bio || "No bio disponible.";
+            
+            // Inyectar RRSS
+            const container = document.getElementById('social-links-container');
+            container.innerHTML = "";
+            if(user.social.ig) container.innerHTML += `<a href="${user.social.ig}" target="_blank" class="social-link-btn"><i class="fab fa-instagram" style="color:var(--ig-color)"></i> Instagram</a>`;
+            if(user.social.sp) container.innerHTML += `<a href="${user.social.sp}" target="_blank" class="social-link-btn"><i class="fab fa-spotify" style="color:var(--sp-color)"></i> Spotify</a>`;
+            if(user.social.yt) container.innerHTML += `<a href="${user.social.yt}" target="_blank" class="social-link-btn"><i class="fab fa-youtube" style="color:var(--yt-color)"></i> YouTube</a>`;
+            
+            if(container.innerHTML === "") container.innerHTML = "<small style='opacity:0.3'>Configura tus redes en Ajustes</small>";
+
+            // Rellenar inputs de edición
+            document.getElementById('p-edit-name').value = user.name;
+            document.getElementById('p-edit-bio').value = user.bio;
+            document.getElementById('p-edit-ig').value = user.social.ig || '';
+            document.getElementById('p-edit-sp').value = user.social.sp || '';
+            document.getElementById('p-edit-yt').value = user.social.yt || '';
+
+            if(user.img) { 
+                document.getElementById('p-avatar-img').src = user.img; document.getElementById('p-avatar-img').style.display = 'block';
+                document.getElementById('home-avatar-img').src = user.img; document.getElementById('home-avatar-img').style.display = 'block';
+            }
+            if(user.bg) { document.getElementById('p-bg-img').src = user.bg; document.getElementById('p-bg-img').style.display = 'block'; }
+        }
+
+        // --- RESTO DE FUNCIONES (Mantenidas del código original) ---
+        function updateStats() {
+            document.getElementById('stat-tracks').innerText = projects.length;
+            let totalVers = projects.reduce((acc, p) => acc + (p.history ? p.history.length : 0) + 1, 0);
+            document.getElementById('stat-vers').innerText = totalVers;
+        }
+
+        function renderLibrary() {
+            const list = document.getElementById('project-list');
+            const term = document.getElementById('library-search').value.toLowerCase();
+            list.innerHTML = '';
+            projects.filter(p => p.name.toLowerCase().includes(term)).forEach((p) => {
+                const realIdx = projects.indexOf(p);
+                list.innerHTML += `<div class="project-card" onclick="viewProject(${realIdx})">
+                    <div><b>${p.name}</b><br><small style="color:var(--accent)">${p.current.vName}</small></div>
+                    <i class="fas fa-play-circle" style="font-size: 24px; color: var(--accent);"></i>
+                </div>`;
             });
-            
-            document.getElementById('header-icon').style.display = user.img ? 'none' : 'block';
-            document.getElementById('v-icon').style.display = user.img ? 'none' : 'block';
-            
-            document.getElementById('v-name').innerText = user.name;
-            document.getElementById('v-bio').innerText = user.bio;
-            document.getElementById('v-country').innerText = "📍 " + user.country;
-
-            document.getElementById('e-name').value = user.name;
-            document.getElementById('e-bio').value = user.bio;
-            document.getElementById('e-country').value = user.country;
         }
 
-        function previewImg(input) {
-            if (input.files && input.files[0]) {
-                let reader = new FileReader();
-                reader.onload = e => { 
-                    user.img = e.target.result; 
-                    document.getElementById('e-avatar').src = user.img;
-                    document.getElementById('e-avatar').style.display = 'block';
+        async function createProject() {
+            const file = document.getElementById('file-input').files[0];
+            const name = document.getElementById('name-input').value || "Track";
+            const ver = document.getElementById('ver-input').value || "V1";
+            const fId = "aud_" + Date.now();
+            db.transaction("files", "readwrite").objectStore("files").put({ id: fId, blob: file }).onsuccess = () => {
+                projects.unshift({ id: Date.now(), name, fav: false, bpm: '', key: '', lyrics: ["","",""], current: { id: fId, vName: ver }, history: [] });
+                saveProjects(); renderLibrary(); updateStats(); navTo('library');
+            };
+        }
+
+        async function viewProject(idx) {
+            currentIdx = idx; const p = projects[idx];
+            document.getElementById('det-title').innerText = p.name;
+            document.getElementById('det-bpm').value = p.bpm || '';
+            document.getElementById('det-key').value = p.key || '';
+            document.getElementById('player-ver-name').innerText = p.current.vName;
+            document.getElementById('det-fav').style.color = p.fav ? 'var(--accent)' : 'white';
+            switchLyric(0); renderHistory(p);
+            db.transaction("files").objectStore("files").get(p.current.id).onsuccess = e => {
+                if(e.target.result) document.getElementById('main-audio').src = URL.createObjectURL(e.target.result.blob);
+            };
+            navTo('project-details');
+        }
+
+        function switchLyric(idx) {
+            activeLyricIdx = idx;
+            document.getElementById('lyrics-area').value = projects[currentIdx].lyrics[idx] || "";
+            document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.classList.toggle('active', i === idx));
+        }
+
+        function saveLyrics() { projects[currentIdx].lyrics[activeLyricIdx] = document.getElementById('lyrics-area').value; saveProjects(); }
+        function saveExtra() { projects[currentIdx].bpm = document.getElementById('det-bpm').value; projects[currentIdx].key = document.getElementById('det-key').value; saveProjects(); }
+
+        function handleImage(input, type) {
+            if (input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    if(type === 'avatar') user.img = e.target.result;
+                    else user.bg = e.target.result;
+                    saveUser(); updateProfileUI();
                 };
                 reader.readAsDataURL(input.files[0]);
             }
         }
 
-        function saveUserProfile() {
-            user.name = document.getElementById('e-name').value;
-            user.bio = document.getElementById('e-bio').value;
-            user.country = document.getElementById('e-country').value;
-            
-            localStorage.setItem('ss_user_v3', JSON.stringify(user));
-            renderUser();
-            navTo('view-profile');
-            alert("¡Perfil actualizado!");
-        }
-
-        // --- GESTIÓN DE PROYECTOS ---
-        function openNewProject() {
-            mode = 'new';
-            document.getElementById('upload-title').innerText = "Nuevo Proyecto";
-            document.getElementById('name-input').style.display = 'block';
-            document.getElementById('name-input').value = '';
-            document.getElementById('ver-input').value = '';
-            navTo('add-audio');
-        }
-
-        function openUpdate() {
-            mode = 'update';
-            document.getElementById('upload-title').innerText = "Actualizar Versión";
-            document.getElementById('name-input').style.display = 'none';
-            document.getElementById('ver-input').value = '';
-            navTo('add-audio');
-        }
-
-        function handleFileSelect() {
-            const file = document.getElementById('file-input').files[0];
-            if(file) {
-                document.getElementById('file-status').innerText = "🎵 " + file.name;
-                document.getElementById('save-btn').disabled = false;
+        function checkFile(input, btnId, statusId) {
+            if(input.files[0]) {
+                document.getElementById(statusId).innerText = "✓ Seleccionado";
+                document.getElementById(btnId).disabled = false;
             }
         }
 
-        async function processSave() {
-            const file = document.getElementById('file-input').files[0];
-            const vName = document.getElementById('ver-input').value || "Final Mix";
-            const fileId = "aud_" + Date.now();
-
-            // Guardar en base de datos pesada (IDB)
-            const tx = db.transaction("files", "readwrite");
-            await tx.objectStore("files").put({ id: fileId, blob: file });
-
-            const meta = { id: fileId, vName: vName, date: new Date().toLocaleDateString() };
-
-            if(mode === 'new') {
-                projects.push({
-                    name: document.getElementById('name-input').value || "Nueva Pista",
-                    notes: "",
-                    current: meta,
-                    history: []
-                });
-            } else {
-                projects[currentIdx].history.unshift(projects[currentIdx].current);
-                projects[currentIdx].current = meta;
-            }
-
-            localStorage.setItem('ss_projects_v3', JSON.stringify(projects));
-            renderLibrary();
-            navTo('library');
-        }
-
-        function renderLibrary() {
-            const container = document.getElementById('project-list');
-            container.innerHTML = projects.length ? '' : '<p style="color:gray;text-align:center;margin-top:20px;">Librería vacía.</p>';
-            projects.forEach((p, i) => {
-                container.innerHTML += `
-                    <div class="project-card" onclick="viewProject(${i})" style="cursor:pointer">
-                        <div>
-                            <div style="font-weight:700;">${p.name}</div>
-                            <div style="font-size:12px; color:var(--accent)">${p.current.vName}</div>
-                        </div>
-                        <i class="fas fa-chevron-right" style="color:#333"></i>
-                    </div>
-                `;
-            });
-        }
-
-        async function viewProject(i) {
-            currentIdx = i;
-            const p = projects[i];
-            document.getElementById('det-title').innerText = p.name;
-            document.getElementById('notes-area').value = p.notes;
-            await loadAudio(p.current, true);
-            renderHistory();
-            navTo('project-details');
-        }
-
-        async function loadAudio(meta, isCurrent) {
-            const tx = db.transaction("files", "readonly");
-            const req = tx.objectStore("files").get(meta.id);
-            req.onsuccess = () => {
-                const url = URL.createObjectURL(req.result.blob);
-                const player = document.getElementById('main-audio');
-                player.src = url;
-                document.getElementById('player-ver-name').innerText = meta.vName;
-                document.getElementById('player-tag').innerText = isCurrent ? "ACTUAL" : "VERSION ANTERIOR";
-                document.getElementById('player-tag').className = isCurrent ? "tag tag-current" : "tag tag-old";
-                player.play();
+        async function addVersion() {
+            const file = document.getElementById('up-file-input').files[0];
+            const fId = "aud_" + Date.now();
+            db.transaction("files", "readwrite").objectStore("files").put({ id: fId, blob: file }).onsuccess = () => {
+                projects[currentIdx].history.push({...projects[currentIdx].current});
+                projects[currentIdx].current = { id: fId, vName: document.getElementById('up-ver-name').value || "Update" };
+                saveProjects(); viewProject(currentIdx);
             };
         }
 
-        function renderHistory() {
-            const list = document.getElementById('history-list');
-            list.innerHTML = '';
-            projects[currentIdx].history.forEach(h => {
-                list.innerHTML += `
-                    <div style="display:flex; justify-content:space-between; align-items:center; background:#121212; padding:12px; margin-top:8px; border-radius:6px; border:1px solid #222;">
-                        <span style="font-size:13px;">${h.vName} <small style="color:var(--text-dim)">- ${h.date}</small></span>
-                        <button onclick='loadAudio(${JSON.stringify(h)}, false)' style="padding:8px 15px; font-size:12px; background:#282828; color:white">OÍR</button>
-                    </div>
-                `;
+        function renderHistory(p) {
+            const list = document.getElementById('history-container');
+            list.innerHTML = p.history.length ? '<br><small style="opacity:0.5">HISTORIAL</small>' : '';
+            p.history.slice().reverse().forEach(v => {
+                list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:12px; background:var(--surface); margin-top:8px; border-radius:15px; border:1px solid rgba(255,255,255,0.02);">
+                    <span style="font-size:13px;">${v.vName}</span><i class="fas fa-play" onclick="playVersion('${v.id}')"></i>
+                </div>`;
             });
         }
 
-        function saveNotes() {
-            projects[currentIdx].notes = document.getElementById('notes-area').value;
-            localStorage.setItem('ss_projects_v3', JSON.stringify(projects));
+        function playVersion(id) {
+            db.transaction("files").objectStore("files").get(id).onsuccess = e => {
+                document.getElementById('main-audio').src = URL.createObjectURL(e.target.result.blob);
+                document.getElementById('main-audio').play();
+            };
         }
 
-        function deleteCurrentProject() {
-            if(confirm("¿Eliminar este track para siempre?")) {
-                projects.splice(currentIdx, 1);
-                localStorage.setItem('ss_projects_v3', JSON.stringify(projects));
-                renderLibrary();
-                navTo('library');
-            }
-        }
-        
-        // Cerrar dropdown si haces click fuera
-        window.onclick = function(event) {
-            if (!event.target.matches('#profile-menu-btn') && !event.target.closest('#profile-menu-btn')) {
-                document.getElementById('profile-dropdown').style.display = "none";
-            }
-        }
+        function saveUser() { localStorage.setItem('ss_user', JSON.stringify(user)); }
+        function saveProjects() { localStorage.setItem('ss_projects', JSON.stringify(projects)); }
+        function toggleFav() { projects[currentIdx].fav = !projects[currentIdx].fav; saveProjects(); viewProject(currentIdx); }
+        function openNewProject() { navTo('add-audio'); document.getElementById('save-btn').disabled = true; document.getElementById('file-status').innerText = "Elegir Audio"; }
+        function deleteTrack() { if(confirm("¿Borrar?")) { projects.splice(currentIdx,1); saveProjects(); renderLibrary(); navTo('library'); } }
     </script>
 </body>
 </html>
